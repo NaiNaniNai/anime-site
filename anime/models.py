@@ -78,6 +78,7 @@ class Anime(models.Model):
     updated_at = models.DateField(
         auto_now=True, verbose_name="Дата обновления", blank=True
     )
+    is_draft = models.BooleanField(verbose_name="Черновик", default=False)
 
     class Meta:
         verbose_name = "Аниме"
@@ -85,6 +86,57 @@ class Anime(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.japan_title}"
+
+
+class Episode(models.Model):
+    title = models.CharField(max_length=128, verbose_name="Название")
+    slug = models.SlugField(max_length=128, verbose_name="Слаг")
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
+    description = models.CharField(
+        max_length=4096, verbose_name="Описание серии", blank=True
+    )
+    video = models.FileField(upload_to="episodes/", verbose_name="Эпизод")
+    created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateField(
+        auto_now=True, verbose_name="Дата обновления", blank=True
+    )
+
+    class Meta:
+        verbose_name = "Эпизод"
+        verbose_name_plural = "Эпизоды"
+
+    def __str__(self):
+        return f"{self.anime} - {self.title}"
+
+
+class AnimeShots(models.Model):
+    title = models.CharField(max_length=128, verbose_name="Заголовок")
+    description = models.CharField(max_length=1024, verbose_name="Описание")
+    image = models.ImageField(upload_to="anime_shots/", verbose_name="Изображение")
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
+
+    class Meta:
+        verbose_name = "Кадр из аниме"
+        verbose_name_plural = "Кадры из аниме"
+
+    def __str__(self):
+        return f"{self.anime} - {self.title}"
+
+
+class EpisodeShots(models.Model):
+    title = models.CharField(max_length=128, verbose_name="Заголовок")
+    description = models.CharField(max_length=1024, verbose_name="Описание")
+    image = models.ImageField(upload_to="episode_image/", verbose_name="Изображение")
+    episode = models.ForeignKey(
+        Episode, on_delete=models.CASCADE, verbose_name="Эпизод"
+    )
+
+    class Meta:
+        verbose_name = "Кадр из эпизода"
+        verbose_name_plural = "Кадры из эпизодов"
+
+    def __str__(self):
+        return f"{self.episode} - {self.title}"
 
 
 class Vote(models.Model):
@@ -126,27 +178,6 @@ class FollowingAnime(models.Model):
         return f"{self.user} - {self.anime}"
 
 
-class Episode(models.Model):
-    title = models.CharField(max_length=128, verbose_name="Название")
-    slug = models.SlugField(max_length=128, verbose_name="Слаг")
-    anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
-    description = models.CharField(
-        max_length=4096, verbose_name="Описание серии", blank=True
-    )
-    video = models.FileField(upload_to="episodes/", verbose_name="Эпизод")
-    created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateField(
-        auto_now=True, verbose_name="Дата обновления", blank=True
-    )
-
-    class Meta:
-        verbose_name = "Эпизод"
-        verbose_name_plural = "Эпизоды"
-
-    def __str__(self):
-        return f"{self.anime} - {self.title}"
-
-
 class AnimeReview(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Пользователь"
@@ -157,6 +188,13 @@ class AnimeReview(models.Model):
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(
         auto_now=True, verbose_name="Дата обновления", blank=True
+    )
+    parent = models.ForeignKey(
+        "self",
+        verbose_name="Родитель",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
 
     class Meta:
@@ -179,6 +217,13 @@ class EpisodeReview(models.Model):
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(
         auto_now=True, verbose_name="Дата обновления", blank=True
+    )
+    parent = models.ForeignKey(
+        "self",
+        verbose_name="Родитель",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
 
     class Meta:
