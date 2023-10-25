@@ -218,6 +218,13 @@ class EpisodeReview(models.Model):
     updated_at = models.DateField(
         auto_now=True, verbose_name="Дата обновления", blank=True
     )
+    parent = models.ForeignKey(
+        "self",
+        verbose_name="Родитель",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Комментарий к эпизоду"
