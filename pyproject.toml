@@ -12,8 +12,14 @@ psycopg2 = "^2.9.9"
 environ = "^1.0"
 django-environ = "^0.11.2"
 pillow = "^10.1.0"
+django-migration-linter = "^5.0.0"
+setuptools = "^68.2.2"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.djlint.per-file-ignores]
+"anime_list.html"= "H030,H031"
