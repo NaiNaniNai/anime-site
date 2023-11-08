@@ -38,7 +38,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "anime_site.urls"
+ROOT_URLCONF = "project_root.urls"
 
 TEMPLATES = [
     {
@@ -56,7 +56,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "anime_site.wsgi.application"
+WSGI_APPLICATION = "project_root.wsgi.application"
 
 
 DATABASES = {
