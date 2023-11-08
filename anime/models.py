@@ -6,6 +6,10 @@ from anime.choices import STATUS_CHOICES, TYPE_CHOICES
 
 
 class Studio(models.Model):
+    """
+    Model for studio
+    """
+
     name = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
     description = models.CharField(max_length=4096, verbose_name="Описание")
@@ -19,6 +23,10 @@ class Studio(models.Model):
 
 
 class Genre(models.Model):
+    """
+    Model for genre
+    """
+
     name = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
     description = models.CharField(max_length=4096, verbose_name="Описание")
@@ -32,6 +40,10 @@ class Genre(models.Model):
 
 
 class Category(models.Model):
+    """
+    Model for category
+    """
+
     name = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
     description = models.CharField(max_length=4096, verbose_name="Описание")
@@ -45,6 +57,10 @@ class Category(models.Model):
 
 
 class Anime(models.Model):
+    """
+    Model for anime
+    """
+
     title = models.CharField(max_length=256, verbose_name="Название")
     japan_title = models.CharField(max_length=256, verbose_name="Японское назввание")
     slug = models.SlugField(max_length=256, verbose_name="Слаг")
@@ -89,6 +105,10 @@ class Anime(models.Model):
 
 
 class Episode(models.Model):
+    """
+    Model for episode
+    """
+
     title = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
     anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
@@ -110,6 +130,10 @@ class Episode(models.Model):
 
 
 class AnimeShots(models.Model):
+    """
+    Model for shots for anime
+    """
+
     title = models.CharField(max_length=128, verbose_name="Заголовок")
     description = models.CharField(max_length=1024, verbose_name="Описание")
     image = models.ImageField(upload_to="anime_shots/", verbose_name="Изображение")
@@ -124,6 +148,10 @@ class AnimeShots(models.Model):
 
 
 class EpisodeShots(models.Model):
+    """
+    Model for shots for episode
+    """
+
     title = models.CharField(max_length=128, verbose_name="Заголовок")
     description = models.CharField(max_length=1024, verbose_name="Описание")
     image = models.ImageField(upload_to="episode_image/", verbose_name="Изображение")
@@ -140,6 +168,10 @@ class EpisodeShots(models.Model):
 
 
 class Vote(models.Model):
+    """
+    Model for vote
+    """
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор")
     anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
     rating = models.IntegerField(
@@ -161,6 +193,10 @@ class Vote(models.Model):
 
 
 class FollowingAnime(models.Model):
+    """
+    Model for following anime
+    """
+
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Пользователь"
     )
@@ -179,6 +215,10 @@ class FollowingAnime(models.Model):
 
 
 class AnimeReview(models.Model):
+    """
+    Model for anime commentary
+    """
+
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Пользователь"
     )
@@ -206,6 +246,10 @@ class AnimeReview(models.Model):
 
 
 class EpisodeReview(models.Model):
+    """
+    Model for episode commentary
+    """
+
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Пользователь"
     )
