@@ -6,9 +6,7 @@ from anime.choices import STATUS_CHOICES, TYPE_CHOICES
 
 
 class Studio(models.Model):
-    """
-    Model for studio
-    """
+    """Model for studio"""
 
     name = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
@@ -18,14 +16,12 @@ class Studio(models.Model):
         verbose_name = "Студия"
         verbose_name_plural = "Студии"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
 class Genre(models.Model):
-    """
-    Model for genre
-    """
+    """Model for genre"""
 
     name = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
@@ -35,14 +31,12 @@ class Genre(models.Model):
         verbose_name = "Жанр"
         verbose_name_plural = "Жанры"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
 class Category(models.Model):
-    """
-    Model for category
-    """
+    """Model for category"""
 
     name = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
@@ -52,14 +46,12 @@ class Category(models.Model):
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
 class Anime(models.Model):
-    """
-    Model for anime
-    """
+    """Model for anime"""
 
     title = models.CharField(max_length=256, verbose_name="Название")
     japan_title = models.CharField(max_length=256, verbose_name="Японское назввание")
@@ -100,14 +92,12 @@ class Anime(models.Model):
         verbose_name = "Аниме"
         verbose_name_plural = "Аниме"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.title} - {self.japan_title}"
 
 
 class Episode(models.Model):
-    """
-    Model for episode
-    """
+    """Model for episode"""
 
     title = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
@@ -125,14 +115,12 @@ class Episode(models.Model):
         verbose_name = "Эпизод"
         verbose_name_plural = "Эпизоды"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.anime} - {self.title}"
 
 
 class AnimeShots(models.Model):
-    """
-    Model for shots for anime
-    """
+    """Model for shots for anime"""
 
     title = models.CharField(max_length=128, verbose_name="Заголовок")
     description = models.CharField(max_length=1024, verbose_name="Описание")
@@ -143,14 +131,12 @@ class AnimeShots(models.Model):
         verbose_name = "Кадр из аниме"
         verbose_name_plural = "Кадры из аниме"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.anime} - {self.title}"
 
 
 class EpisodeShots(models.Model):
-    """
-    Model for shots for episode
-    """
+    """Model for shots for episode"""
 
     title = models.CharField(max_length=128, verbose_name="Заголовок")
     description = models.CharField(max_length=1024, verbose_name="Описание")
@@ -163,14 +149,12 @@ class EpisodeShots(models.Model):
         verbose_name = "Кадр из эпизода"
         verbose_name_plural = "Кадры из эпизодов"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.episode} - {self.title}"
 
 
 class Vote(models.Model):
-    """
-    Model for vote
-    """
+    """Model for vote"""
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор")
     anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
@@ -188,14 +172,12 @@ class Vote(models.Model):
         verbose_name = "Оценка"
         verbose_name_plural = "Оценки"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.user} - {self.anime}"
 
 
 class FollowingAnime(models.Model):
-    """
-    Model for following anime
-    """
+    """Model for following anime"""
 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Пользователь"
@@ -210,14 +192,12 @@ class FollowingAnime(models.Model):
         verbose_name = "Отслеживаемое аниме"
         verbose_name_plural = "Отслеживаемые аниме"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.user} - {self.anime}"
 
 
 class AnimeReview(models.Model):
-    """
-    Model for anime commentary
-    """
+    """Model for anime commentary"""
 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Пользователь"
@@ -241,14 +221,12 @@ class AnimeReview(models.Model):
         verbose_name = "Комментарий к аниме"
         verbose_name_plural = "Комментарии к аниме"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.user} - {self.anime} - {self.text}"
 
 
 class EpisodeReview(models.Model):
-    """
-    Model for episode commentary
-    """
+    """Model for episode commentary"""
 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Пользователь"
@@ -274,5 +252,5 @@ class EpisodeReview(models.Model):
         verbose_name = "Комментарий к эпизоду"
         verbose_name_plural = "Комментарии к эпизодам"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.episode} - {self.user} - {self.text}"
