@@ -11,4 +11,5 @@ class AnimeViews(View):
 
     def get(self, request: HttpRequest) -> TemplateResponse:
         animes = Anime.objects.filter(is_draft=False)
-        return render(request, "anime/anime_list.html", {"anime_list": animes})
+        context = {"anime_list": animes}
+        return render(request, "anime/anime_list.html", context)
