@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zxx">
+{% load static %}
+<html lang="ru">
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="Anime Template">
@@ -14,25 +15,25 @@
               rel="stylesheet">
         <!-- Css Styles -->
         <link rel="stylesheet"
-              href="../../static/css/bootstrap.min.css"
+              href="{% static 'css/bootstrap.min.css' %}"
               type="text/css">
         <link rel="stylesheet"
-              href="../../static/css/font-awesome.min.css"
+              href="{% static 'css/font-awesome.min.css' %}"
               type="text/css">
         <link rel="stylesheet"
-              href="../../static/css/elegant-icons.css"
+              href="{% static 'css/elegant-icons.css' %}"
               type="text/css">
-        <link rel="stylesheet" href="../../static/css/plyr.css" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/plyr.css' %}" type="text/css">
         <link rel="stylesheet"
-              href="../../static/css/nice-select.css"
-              type="text/css">
-        <link rel="stylesheet"
-              href="../../static/css/owl.carousel.min.css"
+              href="{% static 'css/nice-select.css' %}"
               type="text/css">
         <link rel="stylesheet"
-              href="../../static/css/slicknav.min.css"
+              href="{% static 'css/owl.carousel.min.css' %}"
               type="text/css">
-        <link rel="stylesheet" href="../../static/css/style.css" type="text/css">
+        <link rel="stylesheet"
+              href="{% static 'css/slicknav.min.css' %}"
+              type="text/css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     </head>
     <body>
         <!-- Page Preloder -->
@@ -46,7 +47,7 @@
                     <div class="col-lg-2">
                         <div class="header__logo">
                             <a href="anime_list.html">
-                                <img src="../../static/img/logo.png" alt="">
+                                <img src="{% static 'img/logo.png' %}" alt="">
                             </a>
                         </div>
                     </div>
@@ -64,7 +65,7 @@
                                                 <a href="categories.html">Categories</a>
                                             </li>
                                             <li>
-                                                <a href="./anime-details.html">Anime Details</a>
+                                                <a href="./anime_detail.html">Anime Details</a>
                                             </li>
                                             <li>
                                                 <a href="anime-watching.html">Anime Watching</a>
@@ -123,7 +124,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="anime__details__pic set-bg"
-                                 data-setbg="img/anime/details-pic.jpg">
+                                 data-setbg="{% static 'img/anime/details-pic.jpg' %}">
                                 <div class="comment">
                                     <i class="fa fa-comments"></i> 11
                                 </div>
@@ -212,7 +213,7 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-1.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -226,18 +227,18 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-2.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-2.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
                                         Lewis Mann - <span>5 Hour ago</span>
                                     </h6>
-                                    <p>Finally it came out ages ago</p>
+                                    <p>Finally, it came out ages ago</p>
                                 </div>
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-3.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-3.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -248,7 +249,7 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-4.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-4.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -262,7 +263,7 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-5.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-5.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -273,7 +274,7 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-6.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-6.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -356,7 +357,7 @@
                     <div class="col-lg-3">
                         <div class="footer__logo">
                             <a href="anime_list.html">
-                                <img src="../../static/img/logo.png" alt="">
+                                <img src="{% static 'img/logo.png' %}" alt="">
                             </a>
                         </div>
                     </div>
@@ -402,13 +403,13 @@
         </div>
         <!-- Search model end -->
         <!-- Js Plugins -->
-        <script src="../../static/js/jquery-3.3.1.min.js"></script>
-        <script src="../../static/js/bootstrap.min.js"></script>
-        <script src="../../static/js/player.js"></script>
-        <script src="../../static/js/jquery.nice-select.min.js"></script>
-        <script src="../../static/js/mixitup.min.js"></script>
-        <script src="../../static/js/jquery.slicknav.js"></script>
-        <script src="../../static/js/owl.carousel.min.js"></script>
-        <script src="../../static/js/main.js"></script>
+        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/player.js' %}"></script>
+        <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'js/mixitup.min.js' %}"></script>
+        <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
