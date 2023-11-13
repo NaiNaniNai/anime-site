@@ -2,23 +2,22 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.views.generic.base import View
+from django.views.generic import ListView, DetailView
 
 from .models import Anime
 
 
-class AnimeViews(View):
+class AnimeViews(ListView):
     """List of anime"""
 
-    def get(self, request: HttpRequest) -> TemplateResponse:
-        animes = Anime.objects.filter(is_draft=False)
-        context = {"anime_list": animes}
-        return render(request, "anime_list.html", context)
+    model = Anime
+    queryset = Anime.objects.filter(is_draft=False)
+    template_name = "anime_list.html"
 
 
-class AnimeDetailViews(View):
+class AnimeDetailViews(DetailView):
     """Detail of anime"""
 
-    def get(self, request:HttpRequest, slug) -> TemplateResponse:
-        anime = Anime.objects.get(slug=slug)
-        context = {"anime": anime}
-        return render(request, 'anime_detail.html', context)
+    model = Anime
+    slug_field = "slug"
+    template_name = "anime_detail.html"
