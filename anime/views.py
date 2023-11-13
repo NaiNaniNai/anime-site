@@ -13,3 +13,12 @@ class AnimeViews(View):
         animes = Anime.objects.filter(is_draft=False)
         context = {"anime_list": animes}
         return render(request, "anime_list.html", context)
+
+
+class AnimeDetailViews(View):
+    """Detail of anime"""
+
+    def get(self, request:HttpRequest, slug) -> TemplateResponse:
+        anime = Anime.objects.get(slug=slug)
+        context = {"anime": anime}
+        return render(request, 'anime_detail.html', context)

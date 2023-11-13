@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zxx">
+{% load static %}
+<html lang="ru">
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="Anime Template">
@@ -14,25 +15,25 @@
               rel="stylesheet">
         <!-- Css Styles -->
         <link rel="stylesheet"
-              href="../../static/css/bootstrap.min.css"
+              href="{% static 'css/bootstrap.min.css' %}"
               type="text/css">
         <link rel="stylesheet"
-              href="../../static/css/font-awesome.min.css"
+              href="{% static 'css/font-awesome.min.css' %}"
               type="text/css">
         <link rel="stylesheet"
-              href="../../static/css/elegant-icons.css"
+              href="{% static 'css/elegant-icons.css' %}"
               type="text/css">
-        <link rel="stylesheet" href="../../static/css/plyr.css" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/plyr.css' %}" type="text/css">
         <link rel="stylesheet"
-              href="../../static/css/nice-select.css"
-              type="text/css">
-        <link rel="stylesheet"
-              href="../../static/css/owl.carousel.min.css"
+              href="{% static 'css/nice-select.css' %}"
               type="text/css">
         <link rel="stylesheet"
-              href="../../static/css/slicknav.min.css"
+              href="{% static 'css/owl.carousel.min.css' %}"
               type="text/css">
-        <link rel="stylesheet" href="../../static/css/style.css" type="text/css">
+        <link rel="stylesheet"
+              href="{% static 'css/slicknav.min.css' %}"
+              type="text/css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     </head>
     <body>
         <!-- Page Preloder -->
@@ -46,7 +47,7 @@
                     <div class="col-lg-2">
                         <div class="header__logo">
                             <a href="anime_list.html">
-                                <img src="../../static/img/logo.png" alt="">
+                                <img src="{% static 'img/logo.png' %}" alt="">
                             </a>
                         </div>
                     </div>
@@ -55,16 +56,16 @@
                             <nav class="header__menu mobile-menu">
                                 <ul>
                                     <li class="active">
-                                        <a href="anime_list.html">Homepage</a>
+                                        <a href="./anime_list.html">Главная</a>
                                     </li>
                                     <li>
-                                        <a href="categories.html">Categories <span class="arrow_carrot-down"></span></a>
+                                        <a href="categories.html">Категории<span class="arrow_carrot-down"></span></a>
                                         <ul class="dropdown">
                                             <li>
                                                 <a href="categories.html">Categories</a>
                                             </li>
                                             <li>
-                                                <a href="./anime-details.html">Anime Details</a>
+                                                <a href="./anime_detail.html">Anime Details</a>
                                             </li>
                                             <li>
                                                 <a href="anime-watching.html">Anime Watching</a>
@@ -81,10 +82,10 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="blog.html">Our Blog</a>
+                                        <a href="blog.html">Блог</a>
                                     </li>
                                     <li>
-                                        <a href="#">Contacts</a>
+                                        <a href="#">Контакты</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -123,20 +124,20 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="anime__details__pic set-bg"
-                                 data-setbg="img/anime/details-pic.jpg">
+                                 data-setbg="{{ MEDIA_URL }} {{ anime.poster.url }}">
                                 <div class="comment">
                                     <i class="fa fa-comments"></i> 11
                                 </div>
                                 <div class="view">
-                                    <i class="fa fa-eye"></i> 9141
+                                    <i class="fa fa-eye"></i> {{ anime.views }}
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-9">
                             <div class="anime__details__text">
                                 <div class="anime__details__title">
-                                    <h3>Fate Stay Night: Unlimited Blade</h3>
-                                    <span>フェイト／ステイナイト, Feito／sutei naito</span>
+                                    <h3>{{ anime.title }}</h3>
+                                    <span>{{ anime.japan_title }}</span>
                                 </div>
                                 <div class="anime__details__rating">
                                     <div class="rating">
@@ -148,49 +149,51 @@
                                     </div>
                                     <span>1.029 Votes</span>
                                 </div>
-                                <p>
-                                    Every human inhabiting the world of Alcia is branded by a “Count” or a number written on
-                                    their body. For Hina’s mother, her total drops to 0 and she’s pulled into the Abyss,
-                                    never to be seen again. But her mother’s last words send Hina on a quest to find a
-                                    legendary hero from the Waste War - the fabled Ace!
-                                </p>
+                                <p>{{ anime.description }}</p>
                                 <div class="anime__details__widget">
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <ul>
                                                 <li>
-                                                    <span>Type:</span> TV Series
+                                                    <span>Тип показа:</span> {{ anime.type }}
                                                 </li>
                                                 <li>
-                                                    <span>Studios:</span> Lerche
+                                                    <span>Студия:</span> {{ anime.studio }}
                                                 </li>
                                                 <li>
-                                                    <span>Date aired:</span> Oct 02, 2019 to ?
+                                                    <span>Статус:</span> {{ anime.status }}
                                                 </li>
                                                 <li>
-                                                    <span>Status:</span> Airing
+                                                    <span>Дата начала выхода:</span> {{ anime.start_date }}
                                                 </li>
                                                 <li>
-                                                    <span>Genre:</span> Action, Adventure, Fantasy, Magic
+                                                    <span>Дата окончания:</span> {{ anime.end_date }}
+                                                </li>
+                                                <li>
+                                                    <span>Категория:</span> {{ anime.category }}
+                                                </li>
+                                                <li>
+                                                    <span>Жанры:</span>
+                                                    {% for genre in anime.genres.all %}{{ genre.name }}{% endfor %}
                                                 </li>
                                             </ul>
                                         </div>
                                         <div class="col-lg-6 col-md-6">
                                             <ul>
                                                 <li>
-                                                    <span>Scores:</span> 7.31 / 1,515
+                                                    <span>Количество вышедших серий:</span> {{ anime.released_episodes }}
                                                 </li>
                                                 <li>
-                                                    <span>Rating:</span> 8.5 / 161 times
+                                                    <span>Количество запланируемых серий:</span> {{ anime.planned_episodes }}
                                                 </li>
                                                 <li>
-                                                    <span>Duration:</span> 24 min/ep
+                                                    <span>Длительность:</span> 24 мин/эп.
                                                 </li>
                                                 <li>
                                                     <span>Quality:</span> HD
                                                 </li>
                                                 <li>
-                                                    <span>Views:</span> 131,541
+                                                    <span>Просмотры:</span> {{ anime.views }}
                                                 </li>
                                             </ul>
                                         </div>
@@ -212,7 +215,7 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-1.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -226,18 +229,18 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-2.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-2.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
                                         Lewis Mann - <span>5 Hour ago</span>
                                     </h6>
-                                    <p>Finally it came out ages ago</p>
+                                    <p>Finally, it came out ages ago</p>
                                 </div>
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-3.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-3.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -248,7 +251,7 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-4.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-4.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -262,7 +265,7 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-5.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-5.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -273,7 +276,7 @@
                             </div>
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
-                                    <img src="../../static/img/anime/review-6.jpg" alt="">
+                                    <img src="{% static 'img/anime/review-6.jpg' %}" alt="">
                                 </div>
                                 <div class="anime__review__item__text">
                                     <h6>
@@ -285,12 +288,12 @@
                         </div>
                         <div class="anime__details__form">
                             <div class="section-title">
-                                <h5>Your Comment</h5>
+                                <h5>Оставьте ваш комментарий</h5>
                             </div>
                             <form action="#">
-                                <textarea placeholder="Your Comment"></textarea>
+                                <textarea placeholder="Ваш комментарий"></textarea>
                                 <button type="submit">
-                                    <i class="fa fa-location-arrow"></i> Review
+                                    <i class="fa fa-location-arrow"></i> Отправить
                                 </button>
                             </form>
                         </div>
@@ -356,7 +359,7 @@
                     <div class="col-lg-3">
                         <div class="footer__logo">
                             <a href="anime_list.html">
-                                <img src="../../static/img/logo.png" alt="">
+                                <img src="{% static 'img/logo.png' %}" alt="">
                             </a>
                         </div>
                     </div>
@@ -402,13 +405,13 @@
         </div>
         <!-- Search model end -->
         <!-- Js Plugins -->
-        <script src="../../static/js/jquery-3.3.1.min.js"></script>
-        <script src="../../static/js/bootstrap.min.js"></script>
-        <script src="../../static/js/player.js"></script>
-        <script src="../../static/js/jquery.nice-select.min.js"></script>
-        <script src="../../static/js/mixitup.min.js"></script>
-        <script src="../../static/js/jquery.slicknav.js"></script>
-        <script src="../../static/js/owl.carousel.min.js"></script>
-        <script src="../../static/js/main.js"></script>
+        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/player.js' %}"></script>
+        <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'js/mixitup.min.js' %}"></script>
+        <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
