@@ -18,7 +18,7 @@ class AnimeViews(View):
 class AnimeDetailViews(View):
     """Detail of anime"""
 
-    def get(self, request:HttpRequest, pk) -> TemplateResponse:
-        anime = Anime.objects.get(id=pk)
+    def get(self, request:HttpRequest, slug) -> TemplateResponse:
+        anime = Anime.objects.get(slug=slug)
         context = {"anime": anime}
         return render(request, 'anime_detail.html', context)
