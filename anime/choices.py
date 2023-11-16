@@ -1,11 +1,11 @@
 STATUS_CHOICES = (
-    ("ongoing", "Онгоинг"),
-    ("completed", "Завершённое"),
-    ("upcoming", "Ожидается"),
+    ("Онгоинг", "Ongoing"),
+    ("Завершён", "Completed"),
+    ("Ожидается", "Planned"),
 )
 
 TYPE_CHOICES = (
-    ("tv", "Тв-сериал"),
-    ("movie", "Аниме-фильм"),
-    ("ova", "Ova"),
+    ("Тв-сериал", "Tv-serial"),
+    ("Фильм", "Movie"),
+    ("Oва", "Ova"),
 )

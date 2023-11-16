@@ -10,6 +10,8 @@ from anime.models import (
     Episode,
     AnimeReview,
     EpisodeReview,
+    AnimeShots,
+    EpisodeShots,
 )
 
 
@@ -33,6 +35,21 @@ class AnimeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
 
 
+@admin.register(Episode)
+class EpisodeAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
+
+
+@admin.register(AnimeShots)
+class AnimeShotsAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(EpisodeShots)
+class EpisodeShotsAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(Vote)
 class VoteAdmin(admin.ModelAdmin):
     pass
@@ -41,11 +58,6 @@ class VoteAdmin(admin.ModelAdmin):
 @admin.register(FollowingAnime)
 class FollowingAnimeAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(Episode)
-class EpisodeAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
 
 
 @admin.register(AnimeReview)
