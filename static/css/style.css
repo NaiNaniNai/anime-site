@@ -956,6 +956,15 @@ ol {
 .anime__details__text {
 	position: relative;
 }
+.anime__details__shots span {
+	color:#ffffff;
+	font-size: 18px;
+	line-height: 30px;
+}
+.anime-details-shots-img {
+	max-width: 250px;
+	height: auto;
+}
 
 .anime__details__text p {
 	color: #b7b7b7;

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% block title %}|{{ anime.title }} {% endblock %}
+
 {% block content %}
     {% load static %}
         <!-- Breadcrumb Begin -->
@@ -97,6 +99,14 @@
                                                 </li>
                                             </ul>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="anime__details__shots">
+                                    <span> Кадры к аниме </span>
+                                    <div>
+                                        {% for image in anime.animeshots_set.all %}
+                                            <img src = "{{ image.image.url }}" class="anime-details-shots-img">
+                                        {% endfor %}
                                     </div>
                                 </div>
                                 <div class="anime__details__btn">
