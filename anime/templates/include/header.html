@@ -1,11 +1,10 @@
 {% load static %}
-
 <header class="header">
     <div class="container">
         <div class="row">
             <div class="col-lg-2">
                 <div class="header__logo">
-                    <a href="./anime_list.html">
+                    <a href="{% url 'anime_list' %}">
                         <img src="{% static 'img/logo.png' %}" alt="">
                     </a>
                 </div>
@@ -15,7 +14,7 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="active">
-                                <a href="#">Главная</a>
+                                <a href="{% url 'anime_list' %}">Главная</a>
                             </li>
                             <li>
                                 <a href="categories.html">Категории<span class="arrow_carrot-down"></span></a>

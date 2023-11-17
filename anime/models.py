@@ -95,6 +95,9 @@ class Anime(models.Model):
     def __str__(self) -> str:
         return f"{self.title} - {self.japan_title}"
 
+    def get_review(self):
+        return self.animereview_set.filter(parent__isnull=True)
+
 
 class Episode(models.Model):
     """Model for episode"""

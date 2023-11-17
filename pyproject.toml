@@ -21,5 +21,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
-[tool.djlint.per-file-ignores]
-"anime_list.html"= "H030,H031"
+[tool.djlint]
+ignore="D018,H006"
