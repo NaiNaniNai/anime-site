@@ -1,10 +1,10 @@
-from django.http import HttpRequest
-from django.shortcuts import render
-from django.template.response import TemplateResponse
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 
 from .models import Anime
+from .forms import AnimeReviewForm
 
 
 class AnimeViews(ListView):
@@ -21,3 +21,21 @@ class AnimeDetailViews(DetailView):
     model = Anime
     slug_field = "slug"
     template_name = "anime_detail.html"
+
+
+class AddReview(View):
+    """Add review of anime"""
+
+    def post(self, request, pk):
+        form = AnimeReviewForm(request.POST)
+        anime = Anime.objects.get(id=pk)
+
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            if request.POST.get("parent", None):
+                form.parent_id = int(request.POST.get("parent"))
+            form.anime_id = pk
+            form.save()
+
+        return redirect(reverse("anime_detail", kwargs={"slug": anime.slug}))

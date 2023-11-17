@@ -1114,6 +1114,12 @@ ol {
 	margin-bottom: 15px;
 }
 
+.anime__review__answer__item {
+	overflow: hidden;
+	margin-left: 15px;
+	margin-bottom: 15px;
+}
+
 .anime__review__item__pic {
 	float: left;
 	margin-right: 20px;
