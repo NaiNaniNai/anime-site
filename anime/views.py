@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 
-from .models import Anime
+from .models import Anime, Studio
 from .forms import AnimeReviewForm
 
 
@@ -39,3 +39,11 @@ class AddReview(View):
             form.save()
 
         return redirect(reverse("anime_detail", kwargs={"slug": anime.slug}))
+
+
+class StudioViews(DetailView):
+    """Detail of studio"""
+
+    model = Studio
+    slug_field = "name"
+    template_name = "studio.html"
