@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+    {% load anime_tag %}
     {% load static %}
     <!-- Hero Section Begin -->
     <section class="hero">
@@ -135,47 +136,7 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="recent__product">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                <div class="section-title">
-                                    <h4>Недавно добавленные аниме</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="btn__all">
-                                    <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            {% for anime in anime_list %}
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="product__item">
-                                        <div class="product__item__pic set-bg"
-                                             data-setbg="{{ MEDIA_URL }} {{ anime.poster_for_main_page.url }}">
-                                            <div class="ep">{{ anime.released_episodes }} / {{ anime.planned_episodes }}</div>
-                                            <div class="comment">
-                                                <i class="fa fa-comments"></i> 11
-                                            </div>
-                                            <div class="view">
-                                                <i class="fa fa-eye"></i> {{ anime.views }}
-                                            </div>
-                                        </div>
-                                        <div class="product__item__text">
-                                            <ul>
-                                                <li>{{ anime.category }}</li>
-                                                {% for genre in anime.genres.all %}<li>{{ genre.name }}</li>{% endfor %}
-                                            </ul>
-                                            <h5>
-                                                <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
-                                            </h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+                    {% get_last_anime count=1 %}
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-8">
                     <div class="product__sidebar">
