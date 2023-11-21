@@ -60,7 +60,7 @@
                                                 <span>Тип показа:</span> {{ anime.type }}
                                             </li>
                                             <li>
-                                                <span>Студия:</span> {{ anime.studio }}
+                                                <span>Студия:</span> <a href="{% url 'studio_detail' anime.studio %}">{{ anime.studio }}</a>
                                             </li>
                                             <li>
                                                 <span>Статус:</span> {{ anime.status }}
