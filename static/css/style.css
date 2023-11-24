@@ -1214,11 +1214,29 @@ ol {
 	color:#ffffff;
 }
 
-.studio__details__title h3 {
+.studio__details__text h3 {
+	margin-left: 20px;
+	margin-bottom: 20px;
+	color:#ffffff;
+	 	display: inline;
+}
+
+.studio__details__anime {
 	margin-bottom: 20px;
 	color:#ffffff;
 }
 
+.studio__details__pic {
+	height: 355px;
+	width: 250px;
+	position: relative;
+	border-radius: 5px;
+}
+
+.studio-details-shots-img {
+	max-width: 100px;
+	height: auto;
+}
 /*---------------------
   Anime Watching
 -----------------------*/

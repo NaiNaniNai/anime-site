@@ -75,7 +75,7 @@
                                              data-setbg="{{ MEDIA_ROOT }}{{ anime.poster_for_main_page.url }}">
                                             <div class="ep">{{ anime.released_episodes }} / {{ anime.planned_episodes }}</div>
                                             <div class="comment">
-                                                <i class="fa fa-comments"></i> 11
+                                                <i class="fa fa-comments"></i> {{ anime.animereview_set.count }}
                                             </div>
                                             <div class="view">
                                                 <i class="fa fa-eye"></i> {{ anime.views }}

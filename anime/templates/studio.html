@@ -10,19 +10,51 @@
             <div class="row">
                 <div class="col-lg-9">
                     <div class="studio__details__text">
-                        <div class="studio__details__title">
-                            <h3>{{ studio.name }}</h3>
-                        </div>
+                        <img src="{{ studio.image.url }}" class="studio-details-shots-img" alt="">
+                        <h3>{{ studio.name }}</h3>
                         <p>Описание: {{ studio.description }}</p>
-                        <div>
-                            <div class="studio__details">
-                                Выпущенные аниме:
-                                {% for anime in studio.animes.all %}
-                                    <div>
-                                        <a href="{% url 'anime_detail' anime.slug %}"></a> {{ anime.title }}
-                                    </div>
-                                {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="studio__details__anime">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="section-title">
+                                    <h4>Выпущенные аниме</h4>
+                                </div>
                             </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="btn__all">
+                                    <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% for anime in studio.animes.all %}
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg"
+                                             data-setbg="{{ MEDIA_ROOT }}{{ anime.poster_for_main_page.url }}">
+                                            <div class="ep">{{ anime.released_episodes }} / {{ anime.planned_episodes }}</div>
+                                            <div class="comment">
+                                                <i class="fa fa-comments"></i> {{ anime.animereview_set.count }}
+                                            </div>
+                                            <div class="view">
+                                                <i class="fa fa-eye"></i> {{ anime.views }}
+                                            </div>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <ul>
+                                                <li>{{ anime.category }}</li>
+                                                {% for genre in anime.genres.all %}<li>{{ genre.name }}</li>{% endfor %}
+                                            </ul>
+                                            <h5>
+                                                <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

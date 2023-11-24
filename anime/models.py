@@ -11,6 +11,7 @@ class Studio(models.Model):
     name = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
     description = models.CharField(max_length=4096, verbose_name="Описание")
+    image = models.ImageField(upload_to="posters/", verbose_name="Постер", null=True)
 
     class Meta:
         verbose_name = "Студия"
