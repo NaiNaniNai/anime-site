@@ -47,3 +47,8 @@ class StudioViews(DetailView):
     model = Studio
     slug_field = "name"
     template_name = "studio.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(StudioViews, self).get_context_data()
+        context["filter_anime"] = self.object.animes.filter(is_draft=False)
+        return context
