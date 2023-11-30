@@ -1026,16 +1026,56 @@ ol {
 	top: 0;
 }
 
-.anime__details__rating .rating i {
-	font-size: 24px;
-	color: #e89f12;
-	display: inline-block;
+.anime__details__rating-area {
+	overflow: hidden;
+	margin: 0 auto;
 }
 
-.anime__details__rating span {
-	display: block;
-	font-size: 18px;
-	color: #b7b7b7;
+.anime__details__rating-area:not(:checked) > label.checked {
+	color: goldenrod;
+}
+
+.anime__details__rating-area:not(:checked) > input {
+	display: none;
+}
+
+.anime__details__rating-area:not(:checked) > label {
+	float: right;
+	width: 34px;
+	padding: 0;
+	cursor: pointer;
+	font-size: 32px;
+	line-height: 32px;
+	color: whitesmoke;
+}
+
+.anime__details__rating-area:not(:checked) > label:before {
+	content: '';
+	font-family: 'FontAwesome';
+	font-size: 24px;
+}
+
+.anime__details__rating-area > input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px goldenrod;
+}
+
+.anime__details__rating-area:not(:checked) > label:hover,
+.anime__details__rating-area:not(:checked) > label:hover ~ label {
+	color: red;
+}
+
+.anime__details__rating-area > input:checked + label:hover,
+.anime__details__rating-area > input:checked + label:hover ~ label,
+.anime__details__rating-area > input:checked ~ label:hover,
+.anime__details__rating-area > input:checked ~ label:hover ~ label,
+.anime__details__rating-area > label:hover ~ input:checked ~ label {
+	color: red;
+	text-shadow: 1px 1px darkred;
+}
+
+.anime__details__rating-area > label:active {
+	position: relative;
 }
 
 .anime__details__widget {

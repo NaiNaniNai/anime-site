@@ -7,7 +7,10 @@
         <meta name="keywords" content="Anime, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title> The Anime сайт{%block title %}{% endblock title %} </title>
+        <title> The Anime сайт
+            {% block title %}
+            {% endblock title %}
+        </title>
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap"
               rel="stylesheet">
@@ -40,12 +43,10 @@
         <div id="preloder">
             <div class="loader"></div>
         </div>
-        {% include 'include/header.html' %}
+        {% include "include/header.html" %}
         {% block content %}
-
         {% endblock content %}
-        {% include 'include/footer.html' %}
-
+        {% include "include/footer.html" %}
         <div class="search-model">
             <div class="h-100 d-flex align-items-center justify-content-center">
                 <div class="search-close-switch">
@@ -65,5 +66,6 @@
         <script src="{% static 'js/jquery.slicknav.js' %}"></script>
         <script src="{% static 'js/owl.carousel.min.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
     </body>
 </html>

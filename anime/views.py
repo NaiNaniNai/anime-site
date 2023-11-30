@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 
-from .models import Anime, Studio
+from .models import Anime, Studio, Vote
 from .forms import AnimeReviewForm
 
 
@@ -21,6 +21,39 @@ class AnimeDetailViews(DetailView):
     model = Anime
     slug_field = "slug"
     template_name = "anime_detail.html"
+
+    def post(self, request, slug):
+        rating = request.POST.get("rating")
+        anime = Anime.objects.filter(slug=slug).first()
+        Vote.objects.update_or_create(
+            user=request.user,
+            anime=anime,
+            defaults={
+                "rating": rating,
+            },
+        )
+
+        return redirect(reverse("anime_detail", kwargs={"slug": anime.slug}))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        votes = self.object.vote_set.values_list("rating", flat=True)
+        anime_rating = 0
+
+        if sum(votes):
+            anime_rating = sum(votes) / len(votes)
+
+        user_vote = self.object.vote_set.filter(
+            user=self.request.user, anime=self.object
+        ).first()
+        user_rating = ()
+
+        if user_vote:
+            user_rating = range(user_vote.rating + 1)
+
+        context.update(user_rating=user_rating, anime_rating=anime_rating)
+
+        return context
 
 
 class AddReview(View):
