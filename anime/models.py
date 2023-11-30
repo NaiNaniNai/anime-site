@@ -163,7 +163,7 @@ class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор")
     anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
     rating = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(10)],
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
         default=0,
         verbose_name="Рейтинг",
     )

@@ -28,7 +28,7 @@
                         <div class="anime__details__pic set-bg"
                              data-setbg="{{ MEDIA_URL }} {{ anime.poster.url }}">
                             <div class="comment">
-                                <i class="fa fa-comments"></i> 11
+                                <i class="fa fa-comments"></i> {{ anime.animereview_set.count }}
                             </div>
                             <div class="view">
                                 <i class="fa fa-eye"></i> {{ anime.views }}
@@ -42,14 +42,29 @@
                                 <span>{{ anime.japan_title }}</span>
                             </div>
                             <div class="anime__details__rating">
-                                <div class="rating">
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star-half-o"></i></a>
-                                </div>
-                                <span>1.029 Votes</span>
+                                <form class="anime__details__rating-area" method="post">
+                                    {% csrf_token %}
+                                    {% for i in "*****" %}
+                                        {% if forloop.revcounter in user_rating %}
+                                            <input type="radio"
+                                                   class="checked"
+                                                   id="star-{{ forloop.revcounter }}"
+                                                   name="rating"
+                                                   value="{{ forloop.revcounter }}"
+                                                   onclick="submit()">
+                                            <label class="checked" for="star-{{ forloop.revcounter }}"></label>
+                                        {% else %}
+                                            <input type="radio"
+                                                   id="star-{{ forloop.revcounter }}"
+                                                   name="rating"
+                                                   value="{{ forloop.revcounter }}"
+                                                   onclick="submit()">
+                                            <label for="star-{{ forloop.revcounter }}"></label>
+                                        {% endif %}
+                                    {% endfor %}
+                                </form>
+                                <span>{{ anime.vote_set.count }} голосов</span>
+                                <span>Средний рейтинг: {{ anime_rating }}</span>
                             </div>
                             <p>{{ anime.description }}</p>
                             <div class="anime__details__widget">
@@ -219,6 +234,12 @@
         </div>
     </section>
     <script>
+        function submit() {
+            let form = document.getElementsByClassName('rating-area')
+
+            form.submit()
+        }
+
         function addReview(name, id) {
             console.log(name, id);
             document.getElementById("contactparent").value = id;
