@@ -78,6 +78,11 @@ class Anime(models.Model):
     end_date = models.DateField(verbose_name="Дата окончания", blank=True, null=True)
     released_episodes = models.IntegerField(verbose_name="Вышедшие эпизоды")
     planned_episodes = models.IntegerField(verbose_name="Запланируемые эпизоды")
+    duration = models.IntegerField(
+        verbose_name="Длительность в минутах (0, если неизвестно)",
+        blank=True,
+        null=True,
+    )
     views = models.IntegerField(verbose_name="Просмотры", blank=True, null=True)
     poster = models.ImageField(upload_to="posters/", verbose_name="Постер")
     poster_for_main_page = models.ImageField(
