@@ -1026,6 +1026,14 @@ ol {
 	top: 0;
 }
 
+.anime__details__rating div{
+	color: #b7b7b7;
+}
+
+.anime__details__rating span{
+	color: #b7b7b7;
+}
+
 .anime__details__rating-area {
 	overflow: hidden;
 	margin: 0 auto;

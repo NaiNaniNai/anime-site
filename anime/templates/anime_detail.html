@@ -63,8 +63,22 @@
                                         {% endif %}
                                     {% endfor %}
                                 </form>
-                                <span>{{ anime.vote_set.count }} голосов</span>
-                                <span>Средний рейтинг: {{ anime_rating }}</span>
+                                <div>Средний рейтинг: {{ anime_rating }}</div>
+                                <span>
+                                    {% if anime.vote_set.count > 0 %}
+                                        {{ anime.vote_set.count }}
+                                        {% if anime.vote_set.count > 4 %}
+                                            голосов
+                                        {% elif anime.vote_set.count > 1 %}
+                                            голоса
+                                        {% elif anime.vote_set.count == 1 %}
+                                            голос
+                                        {% else %}
+                                        {% endif %}
+                                    {% else %}
+                                        Ваш голос будет первым!
+                                    {% endif %}
+                                </span>
                             </div>
                             <p>{{ anime.description }}</p>
                             <div class="anime__details__widget">
