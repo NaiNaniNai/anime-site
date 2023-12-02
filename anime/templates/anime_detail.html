@@ -118,7 +118,12 @@
                                                 <span>Количество запланируемых серий:</span> {{ anime.planned_episodes }}
                                             </li>
                                             <li>
-                                                <span>Длительность:</span> 24 мин/эп.
+                                                <span>Длительность:</span>
+                                                {% if anime.duration > 0 %}
+                                                    {{ anime.duration }} мин/эп
+                                                {% else %}
+                                                    Пока не объявлена
+                                                {% endif %}
                                             </li>
                                             <li>
                                                 <span>Quality:</span> HD

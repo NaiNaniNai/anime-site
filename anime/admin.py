@@ -81,7 +81,10 @@ class AnimeAdmin(admin.ModelAdmin):
         ("Тип, статус и студия", {"fields": (("type", "status", "studio"),)}),
         ("Категория и жанры", {"fields": (("category", "genres"),)}),
         ("Даты", {"fields": (("start_date", "end_date"),)}),
-        ("Эпизоды", {"fields": (("released_episodes", "planned_episodes"),)}),
+        (
+            "Эпизоды",
+            {"fields": (("released_episodes", "planned_episodes", "duration"),)},
+        ),
         (
             "Просмотры и постер",
             {
