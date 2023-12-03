@@ -113,6 +113,7 @@ ol {
 -----------------------*/
 
 .section-title {
+	margin-top: 30px;
 	margin-bottom: 30px;
 }
 
@@ -142,6 +143,9 @@ ol {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: top center;
+	/*max-width: 360px;*/
+	height: 250px;
+
 }
 
 .spad {
@@ -775,6 +779,7 @@ ol {
 	position: relative;
 	border-radius: 5px;
 	margin-bottom: 20px;
+
 }
 
 .product__sidebar__view__item .ep {
@@ -807,6 +812,8 @@ ol {
 	bottom: 25px;
 	width: 100%;
 	padding: 0 30px 0 20px;
+	color: lightslategray;
+
 }
 
 .product__sidebar__view__item h5 a {
@@ -1288,6 +1295,53 @@ ol {
 .studio-details-shots-img {
 	max-width: 100px;
 	height: auto;
+}
+
+.product__sidebar__similar__item {
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+
+.product__sidebar__similar__item__pic {
+	float: left;
+	margin-right: 15px;
+	/*max-height: 60px;*/
+}
+
+.product__sidebar__similar__item__pic img {
+	height: 200px;
+	max-width: 200px;
+}
+
+.product__sidebar__similar__item__text ul {
+	margin-bottom: 10px;
+}
+
+.product__sidebar__similar__item__text ul li {
+	list-style: none;
+	font-size: 10px;
+	color: #ffffff;
+	font-weight: 700;
+	padding: 1px 10px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 50px;
+	display: inline-block;
+}
+
+.product__sidebar__similar__item__text h5 {
+	margin-bottom: 10px;
+}
+
+.product__sidebar__similar__item__text h5 a {
+	color: #ffffff;
+	font-weight: 700;
+	line-height: 26px;
+}
+
+.product__sidebar__similar__item__text span {
+	display: block;
+	font-size: 13px;
+	color: #b7b7b7;
 }
 /*---------------------
   Anime Watching

@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic.base import View
@@ -53,6 +54,14 @@ class AnimeDetailViews(DetailView):
 
         context.update(user_rating=user_rating, anime_rating=anime_rating)
 
+        context["similar_anime"] = (
+            Anime.objects.filter(
+                Q(category_id=self.object.category.id)
+                | Q(genres__in=self.object.genres.all())
+            )
+            .exclude(id=self.object.id)
+            .distinct()
+        )
         return context
 
 
