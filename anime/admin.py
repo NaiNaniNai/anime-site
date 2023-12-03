@@ -83,7 +83,11 @@ class AnimeAdmin(admin.ModelAdmin):
         ("Даты", {"fields": (("start_date", "end_date"),)}),
         (
             "Эпизоды",
-            {"fields": (("released_episodes", "planned_episodes", "duration"),)},
+            {
+                "fields": (
+                    ("released_episodes", "planned_episodes", "duration", "quality"),
+                )
+            },
         ),
         (
             "Просмотры и постер",

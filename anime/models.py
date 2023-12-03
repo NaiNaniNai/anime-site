@@ -2,7 +2,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 
-from anime.choices import STATUS_CHOICES, TYPE_CHOICES
+from anime.choices import STATUS_CHOICES, TYPE_CHOICES, QUALITY_CHOICES
 
 
 class Studio(models.Model):
@@ -82,6 +82,12 @@ class Anime(models.Model):
         verbose_name="Длительность в минутах (0, если неизвестно)",
         blank=True,
         null=True,
+    )
+    quality = models.CharField(
+        max_length=128,
+        choices=QUALITY_CHOICES,
+        verbose_name="Качество",
+        default="Пока не объявлено",
     )
     views = models.IntegerField(verbose_name="Просмотры", blank=True, null=True)
     poster = models.ImageField(upload_to="posters/", verbose_name="Постер")
