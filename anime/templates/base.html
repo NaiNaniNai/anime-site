@@ -52,8 +52,8 @@
                 <div class="search-close-switch">
                     <i class="icon_close"></i>
                 </div>
-                <form class="search-model-form">
-                    <input type="text" id="search-input" placeholder="Search here.....">
+                <form action="{% url 'search' %}" method="get" class="search-model-form">
+                    <input type="text" name="q" id="search-input" placeholder="Search here.....">
                 </form>
             </div>
         </div>
