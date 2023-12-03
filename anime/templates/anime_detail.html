@@ -157,34 +157,40 @@
                         <div class="section-title">
                             <h5>Комментарии [{{ anime.animereview_set.count }}]:</h5>
                         </div>
-                        {% for review in anime.get_review %}
-                            <div class="anime__review__item">
-                                <div class="anime__review__item__pic">
-                                    <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
-                                </div>
-                                <div class="anime__review__item__text">
-                                    <h6>
-                                        {{ review.user }} - <span>{{ review.created_at }}</span>
-                                    </h6>
-                                    <p>{{ review.text }}</p>
-                                </div>
-                                <a href="#formReview"
-                                   onclick="addReview('{{ review.user.username }}', {{ review.id }})">Ответить</a>
-                            </div>
-                            {% for review_answer in review.animereview_set.all %}
-                                <div class="anime__review__answer__item">
+                        {% if anime.animereview_set.count > 0 %}
+                            {% for review in anime.get_review %}
+                                <div class="anime__review__item">
                                     <div class="anime__review__item__pic">
                                         <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
                                     </div>
                                     <div class="anime__review__item__text">
                                         <h6>
-                                            {{ review_answer.user }} - <span>{{ review_answer.created_at }}</span>
+                                            {{ review.user }} - <span>{{ review.created_at }}</span>
                                         </h6>
-                                        <p>{{ review_answer.text }}</p>
+                                        <p>{{ review.text }}</p>
                                     </div>
+                                    <a href="#formReview"
+                                       onclick="addReview('{{ review.user.username }}', {{ review.id }})">Ответить</a>
                                 </div>
+                                {% for review_answer in review.animereview_set.all %}
+                                    <div class="anime__review__answer__item">
+                                        <div class="anime__review__item__pic">
+                                            <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                        </div>
+                                        <div class="anime__review__item__text">
+                                            <h6>
+                                                {{ review_answer.user }} - <span>{{ review_answer.created_at }}</span>
+                                            </h6>
+                                            <p>{{ review_answer.text }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
+                        {% else %}
+                            <div class="anime__review__item__text">
+                                <h6>Ещё нет комментариев! Будьте первыми!</h6>
+                            </div>
+                        {% endif %}
                         <div class="anime__details__form">
                             <div class="section-title">
                                 <h5>Оставьте ваш комментарий</h5>
@@ -205,48 +211,25 @@
                 <div class="col-lg-4 col-md-4">
                     <div class="anime__details__sidebar">
                         <div class="section-title">
-                            <h5>you might like...</h5>
+                            <h5>Похожие аниме</h5>
                         </div>
-                        <div class="product__sidebar__view__item set-bg"
-                             data-setbg="img/sidebar/tv-1.jpg">
-                            <div class="ep">18 / ?</div>
-                            <div class="view">
-                                <i class="fa fa-eye"></i> 9141
+                        {% for anime in similar_anime %}
+                            <div class="product__sidebar__similar__item">
+                                <div class="product__sidebar__similar__item__pic">
+                                    <img src="{{ MEDIA_URL }}{{ anime.poster_for_main_page.url }}" alt="">
+                                </div>
+                                <div class="product__sidebar__similar__item__text">
+                                    <ul>
+                                        <li>{{ anime.category }}</li>
+                                        {% for genre in anime.genres.all %}<li>{{ genre.name }}</li>{% endfor %}
+                                    </ul>
+                                    <h5>
+                                        <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
+                                    </h5>
+                                    <span><i class="fa fa-eye"></i> {{ anime.views }} Просмотров</span>
+                                </div>
                             </div>
-                            <h5>
-                                <a href="#">Boruto: Naruto next generations</a>
-                            </h5>
-                        </div>
-                        <div class="product__sidebar__view__item set-bg"
-                             data-setbg="img/sidebar/tv-2.jpg">
-                            <div class="ep">18 / ?</div>
-                            <div class="view">
-                                <i class="fa fa-eye"></i> 9141
-                            </div>
-                            <h5>
-                                <a href="#">The Seven Deadly Sins: Wrath of the Gods</a>
-                            </h5>
-                        </div>
-                        <div class="product__sidebar__view__item set-bg"
-                             data-setbg="img/sidebar/tv-3.jpg">
-                            <div class="ep">18 / ?</div>
-                            <div class="view">
-                                <i class="fa fa-eye"></i> 9141
-                            </div>
-                            <h5>
-                                <a href="#">Sword art online alicization war of underworld</a>
-                            </h5>
-                        </div>
-                        <div class="product__sidebar__view__item set-bg"
-                             data-setbg="img/sidebar/tv-4.jpg">
-                            <div class="ep">18 / ?</div>
-                            <div class="view">
-                                <i class="fa fa-eye"></i> 9141
-                            </div>
-                            <h5>
-                                <a href="#">Fate/stay night: Heaven's Feel I. presage flower</a>
-                            </h5>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
