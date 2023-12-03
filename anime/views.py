@@ -85,3 +85,19 @@ class StudioViews(DetailView):
         context = super(StudioViews, self).get_context_data()
         context["filter_anime"] = self.object.animes.filter(is_draft=False)
         return context
+
+
+class Search(ListView):
+    """Search anime for title"""
+
+    template_name = "search.html"
+    context_object_name = "result"
+
+    def get_queryset(self):
+        q = self.request.GET.get("q").capitalize()
+        return Anime.objects.filter(title__icontains=q)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["q"] = self.request.GET.get("q")
+        return context

@@ -290,6 +290,10 @@ ol {
 	padding: 0 15px;
 }
 
+.res {
+	color: white;
+}
+
 .search-model-form input {
 	width: 500px;
 	font-size: 40px;
