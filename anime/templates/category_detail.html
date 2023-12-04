@@ -1,26 +1,24 @@
 {% extends "base.html" %}
 {% block title %}
-    |{{ studio.name }}
+    |{{ category.name }}
 {% endblock title %}
 {% block content %}
     {% load static %}
-    <!-- Anime Section Begin -->
     <div class="container">
-        <div class="studio__details__content">
+        <div class="category__details__content">
             <div class="row">
                 <div class="col-lg-9">
-                    <div class="studio__details__text">
-                        <img src="{{ studio.image.url }}" class="studio-details-shots-img" alt="">
-                        <h3>{{ studio.name }}</h3>
-                        <p>Описание: {{ studio.description }}</p>
+                    <div class="category__details__text">
+                        <h3>{{ category.name }}</h3>
+                        <p>Описание: {{ category.description }}</p>
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="studio__details__anime">
+                    <div class="category__details__anime">
                         <div class="row">
                             <div class="col-lg-8 col-md-8 col-sm-8">
                                 <div class="section-title">
-                                    <h4>Выпущенные аниме</h4>
+                                    <h4>Аниме</h4>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4">

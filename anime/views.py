@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 
-from .models import Anime, Studio, Vote
+from .models import Anime, Studio, Category, Vote
 from .forms import AnimeReviewForm
 
 
@@ -109,4 +109,25 @@ class Search(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["q"] = self.request.GET.get("q")
+        return context
+
+
+class CategoryViews(ListView):
+    """List of category"""
+
+    model = Category
+    template_name = "categories.html"
+    queryset = Category.objects.all()
+
+
+class CategoryDetailViews(DetailView):
+    """Detail of category"""
+
+    model = Category
+    slug_field = "slug"
+    template_name = "category_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryDetailViews, self).get_context_data()
+        context["filter_anime"] = self.object.animes.filter(is_draft=False)
         return context

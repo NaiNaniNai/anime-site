@@ -10,9 +10,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="anime_list.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="categories.html">Categories</a>
-                        <span>Romance</span>
+                        <a href="anime_list.html"><i class="fa fa-home"></i>Главная</a>
+                        <a href="categories.html">Категории</a>
+                        <a href="{% url 'category_detail' anime.category.slug %}">{{ anime.category }}</a>
                     </div>
                 </div>
             </div>
