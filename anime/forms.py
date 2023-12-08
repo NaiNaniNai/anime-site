@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import AnimeReview
+from .models import AnimeReview, EpisodeReview
 
 
 class AnimeReviewForm(forms.ModelForm):
@@ -8,4 +8,10 @@ class AnimeReviewForm(forms.ModelForm):
 
     class Meta:
         model = AnimeReview
+        fields = ("text",)
+
+
+class EpisodeReviewForm(forms.ModelForm):
+    class Meta:
+        model = EpisodeReview
         fields = ("text",)

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}
+    |{{ anime.title }}/{{ object.title }} серия
+{% endblock title %}
+{% block content %}
+    {% load static %}
+    <!-- Как будто неплохо вынести это в доп header для anime_detail, episode_list, episode_detail -->
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'anime_list' %}"><i class="fa fa-home"></i> Главная</a>
+                        <a href="{% url 'category_list' %}">Категории</a>
+                        <a href="{% url 'category_detail' anime.category.slug %}">{{ anime.category }}</a>
+                        <a class="last_link" href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+    <!-- Anime Section Begin -->
+    <section class="anime-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="anime__video__player">
+                        <!-- Тут видео с самого аниме -->
+                        <video id="player"
+                               playsinline
+                               controls
+                               data-poster="./videos/anime-watch.jpg">
+                            <source src="{{ MEDIA_URL }} {{ object.video.url }}" type="video/mp4" />
+                            <!-- Captions are optional -->
+                            <track kind="captions" label="English captions" src="#" srclang="en" default />
+                        </video>
+                    </div>
+                    <div class="anime__details__episodes">
+                        <div class="section-title">
+                            <h5>Смотреть серии</h5>
+                        </div>
+                        <!-- У серии что включена должна быть подсветка, либо сделать как на jutsu чтобы слева была серия назад, если есть и справа вперед, если есть -->
+                        {% for episode in episodes %}
+                            {{ episodel.title }}
+                            {% if episode.title == object.title %}
+                                <a class="anime_details__current_episode"
+                                   href="{% url 'episode_detail' anime_slug=anime.slug episode_slug=episode.slug %}"> {{ episode.title }}</a>
+                            {% else %}
+                                <a href="{% url 'episode_detail' anime_slug=anime.slug episode_slug=episode.slug %}">{{ episode.title }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Получать коменты на эпизод, если is_spoiler True, то блюрить содержимое и сделать кнопку, показать все равно, сделать также такое у аниме, если spoiler, то блюр -->
+                    <div class="anime__details__review">
+                        <div class="section-title">
+                            <h5>Комментарии [{{ object.episodereview_set.count }}]:</h5>
+                        </div>
+                        {% if object.episodereview_set.count > 0 %}
+                            {% for review in object.get_review %}
+                                <div class="anime__review__item">
+                                    <div class="anime__review__item__pic">
+                                        <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                    </div>
+                                    <div class="anime__review__item__text">
+                                        <h6>
+                                            {{ review.user }} - <span>{{ review.created_at }}</span>
+                                        </h6>
+                                        {% if review.is_spoiler %}
+                                            <div class="anime_review__item__spoiler" id="review_{{ review.pk }}">{{ review.text }}</div>
+                                            <div class="anime_review__item__notification_spoiler">
+                                                <p>Внимание! Присутствуют спойлеры!</p>
+                                                <button id="review_button_{{ review.pk }}"
+                                                        onclick="changeViewOfSpoiler({{ review.pk }})">
+                                                    Показать текст
+                                                </button>
+                                            </div>
+                                        {% else %}
+                                            <p>{{ review.text }}</p>
+                                        {% endif %}
+                                    </div>
+                                    <a href="#formReview"
+                                       onclick="addReview('{{ review.user.username }}', {{ review.id }})">Ответить</a>
+                                </div>
+                                {% for review_answer in review.episodereview_set.all %}
+                                    <div class="anime__review__answer__item">
+                                        <div class="anime__review__item__pic">
+                                            <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                        </div>
+                                        <div class="anime__review__item__text">
+                                            <h6>
+                                                {{ review_answer.user }} - <span>{{ review_answer.created_at }}</span>
+                                            </h6>
+                                            {% if review_answer.is_spoiler %}
+                                                <div class="anime_review__item__spoiler"
+                                                     id="review_{{ review_answer.pk }}">{{ review_answer.text }}</div>
+                                                <div class="anime_review__item__notification_spoiler">
+                                                    <p>Внимание! Присутствуют спойлеры!</p>
+                                                    <button id="review_button_{{ review_answer.pk }}"
+                                                            onclick="changeViewOfSpoiler({{ review_answer.pk }})">
+                                                        Показать текст
+                                                    </button>
+                                                </div>
+                                            {% else %}
+                                                <p>{{ review_answer.text }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="anime__review__item__text">
+                                <h6>Ещё нет комментариев! Будьте первыми!</h6>
+                            </div>
+                        {% endif %}
+                        <div class="anime__details__form">
+                            <div class="section-title">
+                                <h5>Оставьте ваш комментарий</h5>
+                            </div>
+                            <form action="{% url "episode_detail" anime_slug=anime.slug episode_slug=object.slug %}"
+                                  method="post"
+                                  id="formReview">
+                                {% csrf_token %}
+                                <input type="hidden" name="parent" id="contactparent" value="">
+                                <textarea placeholder="Ваш комментарий" name="text" id="text"></textarea>
+                                <span>Наличие спойлеров</span>
+                                <label class="spoiler_switch">
+                                    <input name="have_spoiler" type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                                <br>
+                                <button type="submit">
+                                    <i class="fa fa-location-arrow"></i> Отправить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Anime Section End -->
+{% endblock content %}

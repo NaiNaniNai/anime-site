@@ -18,7 +18,7 @@
                                 <a href="{% url 'anime_list' %}">Главная</a>
                             </li>
                             <li>
-                                <a href="{% url 'categories' %}">Категории<span class="arrow_carrot-down"></span></a>
+                                <a href="{% url 'category_list' %}">Категории<span class="arrow_carrot-down"></span></a>
                                 <ul class="dropdown">
                                     {% get_categories as categories %}
                                     {% for category in categories %}

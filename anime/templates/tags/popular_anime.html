@@ -27,8 +27,8 @@
                     </div>
                     <div class="product__item__text">
                         <ul>
-                            <li>Active</li>
-                            <li>Movie</li>
+                            <li>{{ anime.category }}</li>
+                            {% for genre in anime.genres.all %}<li>{{ genre.name }}</li>{% endfor %}
                         </ul>
                         <h5>
                             <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>

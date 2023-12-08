@@ -1,11 +1,12 @@
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 
-from .models import Anime, Studio, Category, Vote
-from .forms import AnimeReviewForm
+from .models import Anime, Studio, Category, Vote, Episode
+from .forms import AnimeReviewForm, EpisodeReviewForm
 
 
 class AnimeViews(ListView):
@@ -24,15 +25,31 @@ class AnimeDetailViews(DetailView):
     template_name = "anime_detail.html"
 
     def post(self, request, slug):
-        rating = request.POST.get("rating")
-        anime = Anime.objects.filter(slug=slug).first()
-        Vote.objects.update_or_create(
-            user=request.user,
-            anime=anime,
-            defaults={
-                "rating": rating,
-            },
-        )
+        if request.POST.get("rating"):
+            rating = request.POST.get("rating")
+            anime = Anime.objects.filter(slug=slug).first()
+            Vote.objects.update_or_create(
+                user=request.user,
+                anime=anime,
+                defaults={
+                    "rating": rating,
+                },
+            )
+
+        elif request.POST.get("text"):
+            form = AnimeReviewForm(request.POST)
+            anime = Anime.objects.get(slug=slug)
+            is_spoiler = request.POST.get("have_spoiler") == "on"
+
+            if form.is_valid():
+                form = form.save(commit=False)
+                form.user = request.user
+                if request.POST.get("parent"):
+                    form.parent_id = int(request.POST.get("parent"))
+                if is_spoiler:
+                    form.is_spoiler = is_spoiler
+                form.anime_id = anime.pk
+                form.save()
 
         return redirect(reverse("anime_detail", kwargs={"slug": anime.slug}))
 
@@ -63,24 +80,6 @@ class AnimeDetailViews(DetailView):
             .distinct()
         )
         return context
-
-
-class AddReview(View):
-    """Add review of anime"""
-
-    def post(self, request, pk):
-        form = AnimeReviewForm(request.POST)
-        anime = Anime.objects.get(id=pk)
-
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.user = request.user
-            if request.POST.get("parent", None):
-                form.parent_id = int(request.POST.get("parent"))
-            form.anime_id = pk
-            form.save()
-
-        return redirect(reverse("anime_detail", kwargs={"slug": anime.slug}))
 
 
 class StudioViews(DetailView):
@@ -116,7 +115,7 @@ class CategoryViews(ListView):
     """List of category"""
 
     model = Category
-    template_name = "categories.html"
+    template_name = "category_list.html"
     queryset = Category.objects.all()
 
 
@@ -131,3 +130,77 @@ class CategoryDetailViews(DetailView):
         context = super(CategoryDetailViews, self).get_context_data()
         context["filter_anime"] = self.object.animes.filter(is_draft=False)
         return context
+
+
+class EpisodeList(View):
+    """List of episodes of anime"""
+
+    def get(self, request, anime_slug):
+        anime = (
+            Anime.objects.prefetch_related("episodes").filter(slug=anime_slug).first()
+        )
+        episodes = anime.episodes.order_by("id")
+        if not anime:
+            return HttpResponse("Anime is not define")
+
+        context = {
+            "anime": anime,
+            "episodes": episodes,
+        }
+
+        return render(request, "episode_list.html", context)
+
+
+class EpisodeDetail(View):
+    """Detail of episode"""
+
+    def get(self, request, anime_slug, episode_slug):
+        anime = (
+            Anime.objects.prefetch_related("episodes").filter(slug=anime_slug).first()
+        )
+        object = anime.episodes.filter(slug=episode_slug).first()
+        episodes = anime.episodes.order_by("id")
+
+        if not anime:
+            return JsonResponse(
+                {
+                    "Error": "Аниме не найдено",
+                }
+            )
+
+        if not object:
+            return JsonResponse(
+                {
+                    "Error": "Эпизод не найден",
+                }
+            )
+
+        context = {
+            "anime": anime,
+            "object": object,
+            "episodes": episodes,
+        }
+
+        return render(request, "episode_detail.html", context)
+
+    def post(self, request, anime_slug, episode_slug):
+        form = EpisodeReviewForm(request.POST)
+        episode = Episode.objects.get(slug=episode_slug, anime__slug=anime_slug)
+
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            if request.POST.get("parent"):
+                form.parent_id = int(request.POST.get("parent"))
+            is_spoiler = request.POST.get("have_spoiler") == "on"
+            if is_spoiler:
+                form.is_spoiler = is_spoiler
+            form.episode_id = episode.pk
+            form.save()
+
+        return redirect(
+            reverse(
+                "episode_detail",
+                kwargs={"episode_slug": episode.slug, "anime_slug": anime_slug},
+            )
+        )

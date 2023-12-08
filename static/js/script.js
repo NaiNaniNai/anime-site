@@ -1,9 +1,19 @@
-const ratingItemsList = document.querySelectorAll('.rating__item');
-const ratingItemArray = Array.prototype.slice.call(ratingItemsList);
+function addReview(name, id) {
+    document.getElementById("contactparent").value = id;
+    document.getElementById("text").innerText = name + ', ';
+}
 
-ratingItemArray.forEach(item =>
-    item.addEventListener('click', () => {
-        const { itemValue } = item.dataset;
-        item.parentNode.dataset.totalValue = itemValue;
-    })
-);
+function changeViewOfSpoiler(id) {
+    elem = document.querySelector("#review_" + id);
+    button = document.querySelector("#review_button_" + id);
+    if (elem.classList.contains('anime_review__item__spoiler')) {
+        elem.classList.remove('anime_review__item__spoiler');
+        elem.classList.add('anime_review__item__unspoiler');
+        button.innerHTML = "Скрыть текст";
+    }
+    else {
+        elem.classList.add('anime_review__item__spoiler');
+        elem.classList.remove('anime_review__item__unspoiler');
+        button.innerHTML = "Показать текст";
+    }
+}

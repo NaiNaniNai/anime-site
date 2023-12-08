@@ -10,9 +10,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="anime_list.html"><i class="fa fa-home"></i>Главная</a>
-                        <a href="categories.html">Категории</a>
-                        <a href="{% url 'category_detail' anime.category.slug %}">{{ anime.category }}</a>
+                        <a href="{% url 'anime_list' %}"><i class="fa fa-home"></i>Главная</a>
+                        <a href="{% url 'category_list' %}">Категории</a>
+                        <a class="last_link"
+                           href="{% url 'category_detail' anime.category.slug %}">{{ anime.category }}</a>
                     </div>
                 </div>
             </div>
@@ -145,7 +146,8 @@
                             </div>
                             <div class="anime__details__btn">
                                 <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Follow</a>
-                                <a href="#" class="watch-btn"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
+                                <a href="{% url 'episode_list' anime_slug=anime.slug %}"
+                                   class="watch-btn"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -167,7 +169,18 @@
                                         <h6>
                                             {{ review.user }} - <span>{{ review.created_at }}</span>
                                         </h6>
-                                        <p>{{ review.text }}</p>
+                                        {% if review.is_spoiler %}
+                                            <div class="anime_review__item__spoiler" id="review_{{ review.pk }}">{{ review.text }}</div>
+                                            <div class="anime_review__item__notification_spoiler">
+                                                <p>Внимание! Присутствуют спойлеры!</p>
+                                                <button id="review_button_{{ review.pk }}"
+                                                        onclick="changeViewOfSpoiler({{ review.pk }})">
+                                                    Показать текст
+                                                </button>
+                                            </div>
+                                        {% else %}
+                                            <p>{{ review.text }}</p>
+                                        {% endif %}
                                     </div>
                                     <a href="#formReview"
                                        onclick="addReview('{{ review.user.username }}', {{ review.id }})">Ответить</a>
@@ -181,7 +194,19 @@
                                             <h6>
                                                 {{ review_answer.user }} - <span>{{ review_answer.created_at }}</span>
                                             </h6>
-                                            <p>{{ review_answer.text }}</p>
+                                            {% if review_answer.is_spoiler %}
+                                                <div class="anime_review__item__spoiler"
+                                                     id="review_{{ review_answer.pk }}">{{ review_answer.text }}</div>
+                                                <div class="anime_review__item__notification_spoiler">
+                                                    <p>Внимание! Присутствуют спойлеры!</p>
+                                                    <button id="review_button_{{ review_answer.pk }}"
+                                                            onclick="changeViewOfSpoiler({{ review_answer.pk }})">
+                                                        Показать текст
+                                                    </button>
+                                                </div>
+                                            {% else %}
+                                                <p>{{ review_answer.text }}</p>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -195,12 +220,18 @@
                             <div class="section-title">
                                 <h5>Оставьте ваш комментарий</h5>
                             </div>
-                            <form action="{% url "add_review" anime.id %}"
+                            <form action="{% url "anime_detail" slug=anime.slug %}"
                                   method="post"
                                   id="formReview">
                                 {% csrf_token %}
-                                <input type="hidden" name="parent" id="contactparent" value="">
+                                <input hidden name="parent" id="contactparent" value="">
                                 <textarea placeholder="Ваш комментарий" name="text" id="text"></textarea>
+                                <span>Наличие спойлеров</span>
+                                <label class="spoiler_switch">
+                                    <input name="have_spoiler" type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                                <br>
                                 <button type="submit">
                                     <i class="fa fa-location-arrow"></i> Отправить
                                 </button>
@@ -240,12 +271,6 @@
             let form = document.getElementsByClassName('rating-area')
 
             form.submit()
-        }
-
-        function addReview(name, id) {
-            console.log(name, id);
-            document.getElementById("contactparent").value = id;
-            document.getElementById("text").innerText = name + ', ';
         }
     </script>
 {% endblock content %}
