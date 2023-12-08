@@ -116,7 +116,9 @@ class Episode(models.Model):
 
     title = models.CharField(max_length=128, verbose_name="Название")
     slug = models.SlugField(max_length=128, verbose_name="Слаг")
-    anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
+    anime = models.ForeignKey(
+        Anime, on_delete=models.CASCADE, related_name="episodes", verbose_name="Аниме"
+    )
     description = models.CharField(
         max_length=4096, verbose_name="Описание серии", blank=True
     )
@@ -132,6 +134,9 @@ class Episode(models.Model):
 
     def __str__(self) -> str:
         return f"{self.anime} - {self.title}"
+
+    def get_review(self):
+        return self.episodereview_set.filter(parent__isnull=True)
 
 
 class AnimeShots(models.Model):
