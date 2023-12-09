@@ -1,0 +1,22 @@
+<div class="product__sidebar__comment">
+    <div class="section-title">
+        <h5>Новые комментарии</h5>
+    </div>
+    {% for anime in last_reviewed_anime %}
+        <div class="product__sidebar__comment__item">
+            <div class="product__sidebar__comment__item__pic">
+                <img src="{{ MEDIA_URL }} {{ anime.poster_for_main_page.url }}" alt="">
+            </div>
+            <div class="product__sidebar__comment__item__text">
+                <ul>
+                    <li>{{ anime.category }}</li>
+                    {% for genre in anime.genres.all %}<li>{{ genre.name }}</li>{% endfor %}
+                </ul>
+                <h5>
+                    <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
+                </h5>
+                <span><i class="fa fa-eye"></i> {{ anime.views }} просмотров</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>

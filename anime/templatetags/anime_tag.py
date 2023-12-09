@@ -3,7 +3,7 @@ from django.db.models import Q
 
 from datetime import datetime
 
-from anime.models import Category, Anime
+from anime.models import Category, Anime, AnimeReview
 
 register = template.Library()
 
@@ -42,4 +42,21 @@ def get_popular_anime():
 
     anime = Anime.objects.filter(is_draft=False).order_by("-views")
     context = {"popular_anime": anime}
+    return context
+
+
+@register.inclusion_tag("tags/the_last_reviewed_anime.html")
+def get_last_reviewed_anime():
+    """Output the last reviewed anime"""
+
+    reviews = AnimeReview.objects.select_related("anime").order_by("-created_at")
+    animes = []
+
+    for review in reviews:
+        anime = review.anime
+
+        if anime not in animes:
+            animes.append(anime)
+
+    context = {"last_reviewed_anime": animes}
     return context
