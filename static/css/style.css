@@ -1031,7 +1031,7 @@ input:checked + .slider:before {
 	line-height: 30px;
 }
 
-.anime-details-shots-img {
+.anime__details__shots__img {
 	max-width: 250px;
 	height: auto;
 }
@@ -1581,9 +1581,28 @@ input:checked + .slider:before {
 	background: #ffffff;
 }
 
+.anime__details__episodes h5 {
+	color: #ffffff;
+}
+
 .anime_details__current_episode {
 	color: red !important;
 	background: rgba(194, 183, 183, 0.26) !important;
+}
+
+.episode__details__shots {
+	margin-bottom: 30px;
+}
+
+.episode__details__shots span{
+	color:#ffffff;
+	font-size: 18px;
+	line-height: 30px;
+}
+
+.episode__details__shots__img {
+	max-width: 250px;
+	height: auto;
 }
 
 /*---------------------

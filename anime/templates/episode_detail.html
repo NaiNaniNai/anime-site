@@ -26,8 +26,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="episode__details__shots">
+                        {% if object.episodeshots_set.all %}
+                            <span>Кадры к эпизоду</span>
+                            <div>
+                                {% for image in object.episodeshots_set.all %}
+                                    <img src="{{ image.image.url }}"
+                                         class="episode__details__shots__img"
+                                         alt="">
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
                     <div class="anime__video__player">
-                        <!-- Тут видео с самого аниме -->
                         <video id="player"
                                playsinline
                                controls
@@ -56,7 +67,6 @@
             </div>
             <div class="row">
                 <div class="col-lg-8">
-                    <!-- Получать коменты на эпизод, если is_spoiler True, то блюрить содержимое и сделать кнопку, показать все равно, сделать также такое у аниме, если spoiler, то блюр -->
                     <div class="anime__details__review">
                         <div class="section-title">
                             <h5>Комментарии [{{ object.episodereview_set.count }}]:</h5>

@@ -25,14 +25,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <!-- Как-будто бы сюда непллохо добавить постер аниме, описание мб, условно с anime detail забрать -->
+                    <div class="anime__details__content">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="anime__details__pic set-bg"
+                                     data-setbg="{{ MEDIA_URL }} {{ anime.poster.url }}">
+                                    <div class="comment">
+                                        <i class="fa fa-comments"></i> {{ anime.animereview_set.count }}
+                                    </div>
+                                    <div class="view">
+                                        <i class="fa fa-eye"></i> {{ anime.views }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="anime__details__text">
+                                    <div class="anime__details__title">
+                                        <h3>{{ anime.title }}</h3>
+                                        <span>{{ anime.japan_title }}</span>
+                                    </div>
+                                    <p>{{ anime.description }}</p>
+                                    <p>Желаем вам приятного просмотра!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="anime__details__episodes">
                         <div class="section-title">
                             <h5>Смотреть серии</h5>
                         </div>
-                        {% for episode in episodes %}
-                            <a href="{% url 'episode_detail' anime_slug=anime.slug episode_slug=episode.slug %}">{{ episode.title }}</a>
-                        {% endfor %}
+                        {% if episodes %}
+                            {% for episode in episodes %}
+                                <a href="{% url 'episode_detail' anime_slug=anime.slug episode_slug=episode.slug %}">{{ episode.title }}</a>
+                            {% endfor %}
+                        {% else %}
+                            <h5>Пока ещё нет эпизодов :(</h5>
+                            <h5>Но они обязательно скоро появятся!</h5>
+                        {% endif %}
                     </div>
                 </div>
             </div>
