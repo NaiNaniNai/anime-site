@@ -160,7 +160,17 @@ class EpisodeDetail(View):
         )
         object = anime.episodes.filter(slug=episode_slug).first()
         episodes = anime.episodes.order_by("id")
-
+        index_current_episode = list(episodes.values_list("id", flat=True)).index(
+            object.id
+        )
+        try:
+            next_episode = episodes[index_current_episode + 1]
+        except IndexError:
+            next_episode = []
+        try:
+            last_episode = episodes[index_current_episode - 1]
+        except ValueError:
+            last_episode = []
         if not anime:
             return JsonResponse(
                 {
@@ -179,6 +189,8 @@ class EpisodeDetail(View):
             "anime": anime,
             "object": object,
             "episodes": episodes,
+            "next_episode": next_episode,
+            "last_episode": last_episode,
         }
 
         return render(request, "episode_detail.html", context)
