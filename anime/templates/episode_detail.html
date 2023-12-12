@@ -49,12 +49,19 @@
                         </video>
                     </div>
                     <div class="anime__details__episodes">
+                        {% if last_episode %}
+                            <a class="episode__details__last_episode"
+                               href="{% url 'episode_detail' anime_slug=anime.slug episode_slug=last_episode.slug %}"> {{ last_episode.title }} серия </a>
+                        {% endif %}
+                        {% if next_episode %}
+                            <a class="episode__details__next_episode"
+                               href="{% url 'episode_detail' anime_slug=anime.slug episode_slug=next_episode.slug %}"> {{ next_episode.title }} серия </a>
+                        {% endif %}
                         <div class="section-title">
                             <h5>Смотреть серии</h5>
                         </div>
                         <!-- У серии что включена должна быть подсветка, либо сделать как на jutsu чтобы слева была серия назад, если есть и справа вперед, если есть -->
                         {% for episode in episodes %}
-                            {{ episodel.title }}
                             {% if episode.title == object.title %}
                                 <a class="anime_details__current_episode"
                                    href="{% url 'episode_detail' anime_slug=anime.slug episode_slug=episode.slug %}"> {{ episode.title }}</a>
