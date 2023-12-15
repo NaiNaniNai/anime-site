@@ -73,8 +73,11 @@ class AnimeDetailViews(DetailView):
 
         context["similar_anime"] = (
             Anime.objects.filter(
-                Q(category_id=self.object.category.id)
-                | Q(genres__in=self.object.genres.all())
+                Q(is_draft=False)
+                & (
+                    Q(category_id=self.object.category.id)
+                    | Q(genres__in=self.object.genres.all())
+                )
             )
             .exclude(id=self.object.id)
             .distinct()
@@ -86,7 +89,7 @@ class StudioViews(DetailView):
     """Detail of studio"""
 
     model = Studio
-    slug_field = "name"
+    slug_field = "slug"
     template_name = "studio.html"
 
     def get_context_data(self, **kwargs):

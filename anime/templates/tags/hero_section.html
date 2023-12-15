@@ -1,0 +1,22 @@
+<section class="hero">
+    <div class="container">
+        <div class="hero__slider owl-carousel">
+            {% for anime in animes %}
+                <div class="hero__items set-bg"
+                     data-setbg="{{ MEDIA_URL }} {{ anime.poster_for_main_page.url }}">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <div class="label">{{ anime.category }}</div>
+                                <h2>
+                                    <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
+                                </h2>
+                                <a href="{% url 'episode_list' anime.slug %}"><span>Смотреть</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

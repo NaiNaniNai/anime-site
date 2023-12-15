@@ -146,7 +146,6 @@ ol {
 }
 
 .spad {
-	padding-top: 100px;
 	padding-bottom: 100px;
 }
 
@@ -475,7 +474,6 @@ ol {
 }
 
 .hero__text h2 {
-	color: #ffffff;
 	font-size: 42px;
 	font-family: "Oswald", sans-serif;
 	font-weight: 700;
@@ -488,6 +486,9 @@ ol {
 	-webkit-transition: all, 0.4s;
 	-o-transition: all, 0.4s;
 	transition: all, 0.4s;
+}
+.hero__text h2 a {
+	color: #3d3d3d;
 }
 
 .hero__text p {
@@ -509,6 +510,7 @@ ol {
 	-webkit-transition: all, 0.8s;
 	-o-transition: all, 0.8s;
 	transition: all, 0.8s;
+
 }
 
 .hero__text a span {
@@ -828,8 +830,8 @@ ol {
 .product__sidebar__comment__item__pic {
 	float: left;
 	margin-right: 15px;
-	height: 200px;
-	max-width: 200px;
+	width: 200px;
+	height: auto;
 }
 
 .product__sidebar__comment__item__text {
@@ -1014,10 +1016,6 @@ input:checked + .slider:before {
   Anime Details
 -----------------------*/
 
-.anime-details {
-	padding-top: 60px;
-}
-
 .anime__details__content {
 	margin-bottom: 65px;
 }
@@ -1032,8 +1030,8 @@ input:checked + .slider:before {
 }
 
 .anime__details__shots__img {
-	max-width: 250px;
-	height: auto;
+	width: 250px;
+	height: 140px;
 }
 
 .anime__details__text p {
@@ -1074,6 +1072,7 @@ input:checked + .slider:before {
 
 .anime__details__title {
 	margin-bottom: 20px;
+	max-width: 700px;
 }
 
 .anime__details__title h3 {
@@ -1199,6 +1198,7 @@ input:checked + .slider:before {
 	padding: 14px 20px;
 	border-radius: 4px;
 	margin-right: 11px;
+	margin-top: 20px;
 }
 
 .anime__details__btn .watch-btn span {
@@ -1383,7 +1383,7 @@ input:checked + .slider:before {
 
 .product__sidebar__similar__item__pic img {
 	height: 200px;
-	max-width: 200px;
+	width: 140px;
 }
 
 .product__sidebar__similar__item__text ul {
@@ -1399,6 +1399,7 @@ input:checked + .slider:before {
 	background: rgba(255, 255, 255, 0.2);
 	border-radius: 50px;
 	display: inline-block;
+	margin-left: 5px;
 }
 
 .product__sidebar__similar__item__text h5 {
@@ -1632,6 +1633,7 @@ input:checked + .slider:before {
 
 .breadcrumb-option {
 	padding-top: 35px;
+	padding-bottom: 30px;
 }
 .breadcrumb__links {
 	display: inline-flex;
