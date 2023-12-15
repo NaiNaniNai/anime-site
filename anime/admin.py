@@ -77,7 +77,14 @@ class AnimeAdmin(admin.ModelAdmin):
     list_editable = ("is_draft",)
     actions = ["mark_as_undraft", "mark_as_draft"]
     fieldsets = (
-        ("Главное", {"fields": (("title", "japan_title", "description", "slug"),)}),
+        (
+            "Главное",
+            {
+                "fields": (
+                    ("title", "updated_at", "japan_title", "description", "slug"),
+                )
+            },
+        ),
         ("Тип, статус и студия", {"fields": (("type", "status", "studio"),)}),
         ("Категория и жанры", {"fields": (("category", "genres"),)}),
         ("Даты", {"fields": (("start_date", "end_date"),)}),
@@ -104,7 +111,7 @@ class AnimeAdmin(admin.ModelAdmin):
         ),
         ("Опции", {"fields": (("is_draft"),)}),
     )
-    readonly_fields = ("get_poster_for_main_page",)
+    readonly_fields = ("get_poster_for_main_page", "updated_at")
 
     prepopulated_fields = {"slug": ("title",)}
 
@@ -158,9 +165,15 @@ class EpisodeShotsInLine(admin.TabularInline):
 
 @admin.register(Episode)
 class EpisodeAdmin(admin.ModelAdmin):
-    list_display = ("title", "anime")
+    list_display = (
+        "title",
+        "anime",
+    )
     list_display_links = ("title",)
-    ordering = ("title",)
+    ordering = (
+        "anime",
+        "title",
+    )
     search_fields = ("title", "anime__title")
     inlines = [EpisodeShotsInLine, EpisodeReviewInLine]
     save_on_top = True

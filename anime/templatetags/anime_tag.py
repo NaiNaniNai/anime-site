@@ -31,7 +31,7 @@ def get_trend_anime():
     month = datetime.now().month
     anime = Anime.objects.filter(
         Q(is_draft=False) & Q(created_at__month__range=[f"{month-1}", f"{month}"])
-    ).order_by("-views")
+    ).order_by("-views")[:3]
     context = {"trend_anime": anime}
     return context
 
@@ -40,7 +40,7 @@ def get_trend_anime():
 def get_popular_anime():
     """Output the popular anime"""
 
-    anime = Anime.objects.filter(is_draft=False).order_by("-views")
+    anime = Anime.objects.filter(is_draft=False).order_by("-views")[:3]
     context = {"popular_anime": anime}
     return context
 
@@ -59,4 +59,23 @@ def get_last_reviewed_anime():
             animes.append(anime)
 
     context = {"last_reviewed_anime": animes}
+    return context
+
+
+@register.inclusion_tag("tags/hero_section.html")
+def get_hero_section():
+    """Output the hero section"""
+
+    month = datetime.now().month
+    trend_anime = list(
+        Anime.objects.filter(
+            Q(is_draft=False) & Q(created_at__month__range=[f"{month - 1}", f"{month}"])
+        ).order_by("-views")[:1]
+    )
+    popular_anime = list(Anime.objects.filter(is_draft=False).order_by("-views")[:1])
+    last_anime = list(Anime.objects.filter(is_draft=False).order_by("-id")[:1])
+    hero_section_anime = trend_anime + popular_anime + last_anime
+    context = {
+        "animes": hero_section_anime,
+    }
     return context

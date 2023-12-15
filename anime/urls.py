@@ -6,7 +6,6 @@ from anime import views
 urlpatterns = [
     path("", views.AnimeViews.as_view(), name="anime_list"),
     path("result/", views.Search.as_view(), name="search"),
-    # path("review/<int:pk>/", views.AddReviewAnime.as_view(), name="add_review_anime"),
     path("studio/<str:slug>/", views.StudioViews.as_view(), name="studio_detail"),
     path("category/", views.CategoryViews.as_view(), name="category_list"),
     path(
@@ -21,5 +20,4 @@ urlpatterns = [
         views.EpisodeDetail.as_view(),
         name="episode_detail",
     ),
-    # path("review/<int:pk>/", views.AddReviewEpisode.as_view(), name="add_review_episode"),
 ]

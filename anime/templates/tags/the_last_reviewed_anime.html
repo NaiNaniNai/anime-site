@@ -16,6 +16,7 @@
                     <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
                 </h5>
                 <span><i class="fa fa-eye"></i> {{ anime.views }} просмотров</span>
+                <span><i class="fa fa-comments"></i> {{ anime.animereview_set.count }} </span>
             </div>
         </div>
     {% endfor %}

@@ -90,7 +90,7 @@
                                                 <span>Тип показа:</span> {{ anime.type }}
                                             </li>
                                             <li>
-                                                <span>Студия:</span> <a href="{% url 'studio_detail' anime.studio %}">{{ anime.studio }}</a>
+                                                <span>Студия:</span> <a href="{% url 'studio_detail' anime.studio.slug %}">{{ anime.studio }}</a>
                                             </li>
                                             <li>
                                                 <span>Статус:</span> {{ anime.status }}
@@ -147,7 +147,7 @@
                             <div class="anime__details__btn">
                                 <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Follow</a>
                                 <a href="{% url 'episode_list' anime_slug=anime.slug %}"
-                                   class="watch-btn"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
+                                   class="watch-btn"><span>Смотреть</span> <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
                     </div>
