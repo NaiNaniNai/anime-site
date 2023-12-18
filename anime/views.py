@@ -80,7 +80,7 @@ class AnimeDetailViews(DetailView):
                 )
             )
             .exclude(id=self.object.id)
-            .distinct()
+            .distinct()[:3]
         )
         return context
 

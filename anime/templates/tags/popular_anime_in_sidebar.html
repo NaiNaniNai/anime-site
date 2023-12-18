@@ -16,7 +16,7 @@
                     <i class="fa fa-eye"></i> {{ anime.views }}
                 </div>
                 <h5>
-                    <a href="#">{{ anime.title }}</a>
+                    <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
                 </h5>
             </div>
         {% endfor %}
@@ -28,7 +28,7 @@
                     <i class="fa fa-eye"></i> {{ anime.views }}
                 </div>
                 <h5>
-                    <a href="#">{{ anime.title }}</a>
+                    <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
                 </h5>
             </div>
         {% endfor %}
@@ -40,7 +40,7 @@
                     <i class="fa fa-eye"></i> {{ anime.views }}
                 </div>
                 <h5>
-                    <a href="#">{{ anime.title }}</a>
+                    <a href="{% url 'anime_detail' anime.slug %}">{{ anime.title }}</a>
                 </h5>
             </div>
         {% endfor %}
