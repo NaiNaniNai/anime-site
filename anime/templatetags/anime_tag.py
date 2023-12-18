@@ -1,5 +1,4 @@
 from django import template
-from django.db.models import Q
 
 from datetime import datetime
 
@@ -19,7 +18,9 @@ def get_categories():
 def get_last_anime(count):
     """Output the last anime"""
 
-    anime = Anime.objects.filter(is_draft=False).order_by("-id")[:count]
+    anime = Anime.objects.filter(is_draft=False, type="Тв-сериал").order_by("-id")[
+        :count
+    ]
     context = {"last_anime": anime}
     return context
 
@@ -30,7 +31,9 @@ def get_trend_anime():
 
     month = datetime.now().month
     anime = Anime.objects.filter(
-        Q(is_draft=False) & Q(created_at__month__range=[f"{month-1}", f"{month}"])
+        is_draft=False,
+        type="Тв-сериал",
+        created_at__month__range=[f"{month - 1}", f"{month}"],
     ).order_by("-views")[:3]
     context = {"trend_anime": anime}
     return context
@@ -40,7 +43,9 @@ def get_trend_anime():
 def get_popular_anime():
     """Output the popular anime"""
 
-    anime = Anime.objects.filter(is_draft=False).order_by("-views")[:3]
+    anime = Anime.objects.filter(is_draft=False, type="Тв-сериал").order_by("-views")[
+        :3
+    ]
     context = {"popular_anime": anime}
     return context
 
@@ -69,13 +74,36 @@ def get_hero_section():
     month = datetime.now().month
     trend_anime = list(
         Anime.objects.filter(
-            Q(is_draft=False) & Q(created_at__month__range=[f"{month - 1}", f"{month}"])
+            is_draft=False,
+            type="Тв-сериал",
+            created_at__month__range=[f"{month - 1}", f"{month}"],
         ).order_by("-views")[:1]
     )
-    popular_anime = list(Anime.objects.filter(is_draft=False).order_by("-views")[:1])
-    last_anime = list(Anime.objects.filter(is_draft=False).order_by("-id")[:1])
+    popular_anime = list(
+        Anime.objects.filter(is_draft=False, type="Тв-сериал").order_by("-views")[:1]
+    )
+    last_anime = list(
+        Anime.objects.filter(is_draft=False, type="Тв-сериал").order_by("-id")[:1]
+    )
     hero_section_anime = trend_anime + popular_anime + last_anime
     context = {
         "animes": hero_section_anime,
+    }
+    return context
+
+
+@register.inclusion_tag("tags/popular_anime_in_sidebar.html")
+def get_popular_anime_in_sidebar():
+    tv_anime = Anime.objects.filter(is_draft=False, type="Тв-сериал").order_by(
+        "-views"
+    )[:3]
+    movie_anime = Anime.objects.filter(is_draft=False, type="Фильм").order_by("-views")[
+        :3
+    ]
+    ova_anime = Anime.objects.filter(is_draft=False, type="Oва").order_by("-views")[:3]
+    context = {
+        "tv_anime": tv_anime,
+        "movie_anime": movie_anime,
+        "ova_anime": ova_anime,
     }
     return context

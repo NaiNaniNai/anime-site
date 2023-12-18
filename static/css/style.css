@@ -779,6 +779,10 @@ ol {
 	border-radius: 5px;
 	margin-bottom: 20px;
 }
+.product__sidebar__view__image {
+	height: 190px;
+	width: 200px;
+}
 
 .product__sidebar__view__item .ep {
 	font-size: 13px;
@@ -825,6 +829,7 @@ ol {
 .product__sidebar__comment__item {
 	margin-bottom: 20px;
 	overflow: hidden;
+
 }
 
 .product__sidebar__comment__item__pic {

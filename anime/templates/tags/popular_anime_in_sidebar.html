@@ -1,0 +1,48 @@
+<div class="product__sidebar__view">
+    <div class="section-title">
+        <h5>Самые популярные</h5>
+    </div>
+    <ul class="filter__controls">
+        <li data-filter=".tv">Тв-сериал</li>
+        <li data-filter=".movie">Фильм</li>
+        <li data-filter=".ova">Ова</li>
+    </ul>
+    <div class="filter__gallery">
+        {% for anime in tv_anime %}
+            <div class="product__sidebar__view__item set-bg mix tv"
+                 data-setbg="{{ MEDIA_URL }} {{ anime.poster_for_main_page.url }}">
+                <div class="ep">{{ anime.released_episodes }}/{{ anime.planned_episodes }}</div>
+                <div class="view">
+                    <i class="fa fa-eye"></i> {{ anime.views }}
+                </div>
+                <h5>
+                    <a href="#">{{ anime.title }}</a>
+                </h5>
+            </div>
+        {% endfor %}
+        {% for anime in movie_anime %}
+            <div class="product__sidebar__view__item set-bg mix movie"
+                 data-setbg="{{ MEDIA_URL }}{{ anime.poster_for_main_page.url }}">
+                <div class="ep">{{ anime.released_episodes }}/{{ anime.planned_episodes }}</div>
+                <div class="view">
+                    <i class="fa fa-eye"></i> {{ anime.views }}
+                </div>
+                <h5>
+                    <a href="#">{{ anime.title }}</a>
+                </h5>
+            </div>
+        {% endfor %}
+        {% for anime in ova_anime %}
+            <div class="product__sidebar__view__item set-bg mix ova"
+                 data-setbg="{{ MEDIA_URL }}{{ anime.poster_for_main_page.url }}">
+                <div class="ep">{{ anime.released_episodes }}/{{ anime.planned_episodes }}</div>
+                <div class="view">
+                    <i class="fa fa-eye"></i> {{ anime.views }}
+                </div>
+                <h5>
+                    <a href="#">{{ anime.title }}</a>
+                </h5>
+            </div>
+        {% endfor %}
+    </div>
+</div>
