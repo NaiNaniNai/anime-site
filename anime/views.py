@@ -219,3 +219,8 @@ class EpisodeDetail(View):
                 kwargs={"episode_slug": episode.slug, "anime_slug": anime_slug},
             )
         )
+
+
+class About(View):
+    def get(self, request):
+        return render(request, "about.html")

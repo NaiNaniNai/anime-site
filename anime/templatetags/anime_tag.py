@@ -1,6 +1,7 @@
 from django import template
 
 from datetime import datetime
+import secrets
 
 from anime.models import Category, Anime, AnimeReview
 
@@ -94,6 +95,8 @@ def get_hero_section():
 
 @register.inclusion_tag("tags/popular_anime_in_sidebar.html")
 def get_popular_anime_in_sidebar():
+    """Output the anime with types tv, movie, ova"""
+
     tv_anime = Anime.objects.filter(is_draft=False, type="Тв-сериал").order_by(
         "-views"
     )[:3]
@@ -107,3 +110,10 @@ def get_popular_anime_in_sidebar():
         "ova_anime": ova_anime,
     }
     return context
+
+
+@register.simple_tag()
+def get_random_anime():
+    """Get a random anime"""
+
+    return secrets.choice(Anime.objects.filter(is_draft=False))

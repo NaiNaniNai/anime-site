@@ -29,10 +29,11 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="blog.html">Блог</a>
+                                {% get_random_anime as anime %}
+                                <a href="{% url 'anime_detail' anime.slug %}">Случайное аниме</a>
                             </li>
                             <li>
-                                <a href="#">Контакты</a>
+                                <a href="{% url 'about' %}">Контакты</a>
                             </li>
                         </ul>
                     </nav>
