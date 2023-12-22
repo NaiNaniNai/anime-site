@@ -6,6 +6,8 @@ from anime.choices import STATUS_CHOICES, TYPE_CHOICES, QUALITY_CHOICES
 
 
 class Account(models.Model):
+    """Model of account"""
+
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,

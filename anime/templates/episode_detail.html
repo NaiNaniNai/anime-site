@@ -78,7 +78,8 @@
                             {% for review in object.get_review %}
                                 <div class="anime__review__item">
                                     <div class="anime__review__item__pic">
-                                        <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                        <img src="{{ MEDIA_URL }}{{ review.user.account.image.url }}"
+                                             alt="{% static 'img/anime/review-1.jpg' %}">
                                     </div>
                                     <div class="anime__review__item__text">
                                         <h6>
@@ -103,7 +104,8 @@
                                 {% for review_answer in review.episodereview_set.all %}
                                     <div class="anime__review__answer__item">
                                         <div class="anime__review__item__pic">
-                                            <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                            <img src="{{ MEDIA_URL }} {{ review_answer.user.account.image.url }}"
+                                                 alt="{% static 'img/anime/review-1.jpg' %}">
                                         </div>
                                         <div class="anime__review__item__text">
                                             <h6>
