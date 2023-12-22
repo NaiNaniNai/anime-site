@@ -110,6 +110,10 @@ class Anime(models.Model):
     def get_review(self):
         return self.animereview_set.filter(parent__isnull=True)
 
+    def autoincrement_views(self):
+        self.views += 1
+        self.save(update_fields=["views"])
+
 
 class Episode(models.Model):
     """Model for episode"""
