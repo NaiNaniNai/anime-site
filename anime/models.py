@@ -5,6 +5,25 @@ from django.contrib.auth.models import User
 from anime.choices import STATUS_CHOICES, TYPE_CHOICES, QUALITY_CHOICES
 
 
+class Account(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="account",
+        verbose_name="Пользователь",
+        unique=True,
+    )
+    date_of_birth = models.DateField(verbose_name="Дата рождения")
+    image = models.ImageField(upload_to="avatars/", verbose_name="Аватарка")
+
+    class Meta:
+        verbose_name = "Аккаунт"
+        verbose_name_plural = "Аккаунты"
+
+    def __str__(self) -> str:
+        return f"{self.user}"
+
+
 class Studio(models.Model):
     """Model for studio"""
 

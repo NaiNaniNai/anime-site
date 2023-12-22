@@ -104,10 +104,11 @@
                                             <li>
                                                 <span>Категория:</span> {{ anime.category }}
                                             </li>
-                                            <li>
+                                            {{ /* djlint:off */ }} <li>
                                                 <span>Жанры:</span>
-                                                {% for genre in anime.genres.all %}{{ genre.name }} {% endfor %}
+                                                {% for genre in anime.genres.all %}{{ genre.name }}{% endfor %}
                                             </li>
+                                            {{ /* djlint:on */ }}
                                         </ul>
                                     </div>
                                     <div class="col-lg-6 col-md-6">
@@ -163,11 +164,12 @@
                             {% for review in anime.get_review %}
                                 <div class="anime__review__item">
                                     <div class="anime__review__item__pic">
-                                        <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                        <img src="{{ MEDIA_URL }} {{ review.user.account.image.url }}"
+                                             alt="{% static 'img/anime/review-1.jpg' %}">
                                     </div>
                                     <div class="anime__review__item__text">
                                         <h6>
-                                            {{ review.user }} - <span>{{ review.created_at }}</span>
+                                            {{ review.user }} - <span>{{ review.created_at }} {{ review.user.account }}</span>
                                         </h6>
                                         {% if review.is_spoiler %}
                                             <div class="anime_review__item__spoiler" id="review_{{ review.pk }}">{{ review.text }}</div>
@@ -188,7 +190,8 @@
                                 {% for review_answer in review.animereview_set.all %}
                                     <div class="anime__review__answer__item">
                                         <div class="anime__review__item__pic">
-                                            <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                            <img src="{{ MEDIA_URL }} {{ review_answer.user.account.image.url }}"
+                                                 alt="{% static 'img/anime/review-1.jpg' %}">
                                         </div>
                                         <div class="anime__review__item__text">
                                             <h6>

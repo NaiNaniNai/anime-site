@@ -13,6 +13,7 @@ from anime.models import (
     EpisodeReview,
     AnimeShots,
     EpisodeShots,
+    Account,
 )
 
 
@@ -256,3 +257,36 @@ class EpisodeReviewAdmin(admin.ModelAdmin):
     readonly_fields = ("user", "episode")
     search_fields = ("user", "episode__title")
     list_editable = ("is_spoiler",)
+
+
+@admin.register(Account)
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ("id", "user", "get_avatar")
+    list_display_links = (
+        "id",
+        "user",
+    )
+    ordering = ("id",)
+    search_fields = ("user",)
+
+    fieldsets = (
+        (
+            "Главное",
+            {
+                "fields": (
+                    (
+                        "user",
+                        "image",
+                        "get_avatar",
+                    ),
+                    ("date_of_birth",),
+                )
+            },
+        ),
+    )
+
+    def get_avatar(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="100" height="120"')
+
+    readonly_fields = ("get_avatar",)
+    get_avatar.short_description = "Аватарка"  # type: ignore
