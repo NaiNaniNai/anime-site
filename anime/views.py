@@ -82,7 +82,13 @@ class AnimeDetailViews(DetailView):
             .exclude(id=self.object.id)
             .distinct()[:3]
         )
+
         return context
+
+    def get(self, request, *args, **kwargs):
+        anime = self.get_object()
+        anime.autoincrement_views()
+        return super().get(request, *args, **kwargs)
 
 
 class StudioViews(DetailView):
