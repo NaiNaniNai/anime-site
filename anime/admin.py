@@ -261,7 +261,10 @@ class EpisodeReviewAdmin(admin.ModelAdmin):
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "get_avatar")
+    list_display = (
+        "id",
+        "user",
+    )
     list_display_links = (
         "id",
         "user",
@@ -276,8 +279,9 @@ class AccountAdmin(admin.ModelAdmin):
                 "fields": (
                     (
                         "user",
+                        "slug",
                         "image",
-                        "get_avatar",
+                        # "get_avatar",
                     ),
                     ("date_of_birth",),
                 )
@@ -285,8 +289,9 @@ class AccountAdmin(admin.ModelAdmin):
         ),
     )
 
-    def get_avatar(self, obj):
-        return mark_safe(f'<img src={obj.image.url} width="100" height="120"')
+    # def get_avatar(self, obj):
+    #     return mark_safe(f'<img src={obj.image.url} width="100" height="120"')
 
-    readonly_fields = ("get_avatar",)
-    get_avatar.short_description = "Аватарка"  # type: ignore
+    # readonly_fields = ("get_avatar",)
+    # prepopulated_fields = {"slug": ("user__id",)}
+    # get_avatar.short_description = "Аватарка"  # type: ignore

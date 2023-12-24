@@ -1,12 +1,17 @@
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic.base import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 
-from .models import Anime, Studio, Category, Vote, Episode
-from .forms import AnimeReviewForm, EpisodeReviewForm
+from project_root.settings import BASE_DIR
+
+
+from .models import Anime, Studio, Category, Vote, Episode, Account
+from .forms import AnimeReviewForm, EpisodeReviewForm, SingupForm
 
 
 class AnimeViews(ListView):
@@ -57,19 +62,22 @@ class AnimeDetailViews(DetailView):
         context = super().get_context_data(**kwargs)
         votes = self.object.vote_set.values_list("rating", flat=True)
         anime_rating = 0
+        user_vote = None
 
         if sum(votes):
             anime_rating = sum(votes) / len(votes)
 
-        user_vote = self.object.vote_set.filter(
-            user=self.request.user, anime=self.object
-        ).first()
-        user_rating = ()
+        if self.request.user.id:
+            user_vote = self.object.vote_set.filter(
+                user=self.request.user, anime=self.object
+            ).first()
+            user_rating = ()
 
         if user_vote:
             user_rating = range(user_vote.rating + 1)
+            context.update(user_rating=user_rating)
 
-        context.update(user_rating=user_rating, anime_rating=anime_rating)
+        context.update(anime_rating=anime_rating)
 
         context["similar_anime"] = (
             Anime.objects.filter(
@@ -228,5 +236,136 @@ class EpisodeDetail(View):
 
 
 class About(View):
+    """Output about us"""
+
     def get(self, request):
         return render(request, "about.html")
+
+
+class AccountDetail(View):
+    """Detail of account"""
+
+    def get(self, request, slug):
+        account = Account.objects.filter(slug=slug).first()
+        context = {
+            "account": account,
+        }
+        return render(request, "profile.html", context)
+
+
+class LoginView(View):
+    """Login in anime site"""
+
+    def get(self, request):
+        return render(request, "login.html")
+
+    def post(self, request):
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        print(username)
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect(reverse("anime_list"))
+        else:
+            return JsonResponse(
+                {
+                    "Error": "Ошибка или в имени или в пароле",
+                }
+            )
+
+
+def logout_view(request):
+    """Logout from anime site"""
+
+    logout(request)
+    return redirect(reverse("anime_list"))
+
+
+class SingupView(FormView):
+    """Singup in anime site"""
+
+    form_class = SingupForm
+    template_name = "signup.html"
+    success_url = reverse_lazy("login")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+def handle_uploaded_file(f):
+
+    with open(f"{BASE_DIR}/media/avatars/{f.name}", "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+
+class EditAccountView(View):
+    """Edit anime account"""
+
+    def get(self, request, user_slug):
+        account = Account.objects.filter(slug=user_slug).first()
+        context = {
+            "account": account,
+        }
+        return render(request, "account_edit.html", context)
+
+    def post(self, request, user_slug):
+        account = Account.objects.filter(slug=user_slug).first()
+        if request.FILES.get("avatar"):
+            handle_uploaded_file(request.FILES["avatar"])
+            avatar = request.FILES["avatar"]
+        else:
+            avatar = account.image
+        if request.POST.get("email"):
+            email = request.POST.get("email")
+        else:
+            email = account.user.email
+        if request.POST.get("last_name"):
+            last_name = request.POST.get("last_name")
+        else:
+            last_name = account.user.last_name
+        if request.POST.get("first_name"):
+            first_name = request.POST.get("first_name")
+        else:
+            first_name = account.user.first_name
+        if request.POST.get("date_of_birth"):
+            date_of_birth = request.POST.get("date_of_birth")
+        else:
+            date_of_birth = account.date_of_birth
+
+        Account.objects.update_or_create(
+            user=request.user,
+            defaults={
+                "date_of_birth": date_of_birth,
+                "image": avatar,
+            },
+        )
+
+        User.objects.filter(username=account).update(
+            last_name=last_name, first_name=first_name, email=email
+        )
+
+        return redirect(reverse("account_detail", kwargs={"slug": user_slug}))
+
+
+class ResetPasswordView(View):
+    """Reset password of user"""
+
+    def get(self, request):
+        return render(request, "reset_password.html")
+
+    def post(self, request):
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        new_password = request.POST.get("new_password")
+        user = User.objects.filter(username=username).first()
+        print(new_password)
+        if user.email == email:
+            if new_password:
+                user.set_password(new_password)
+                user.save()
+
+        return redirect(reverse("login"))

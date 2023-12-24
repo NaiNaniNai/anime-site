@@ -15,8 +15,15 @@ class Account(models.Model):
         verbose_name="Пользователь",
         unique=True,
     )
-    date_of_birth = models.DateField(verbose_name="Дата рождения")
-    image = models.ImageField(upload_to="avatars/", verbose_name="Аватарка")
+    date_of_birth = models.DateField(
+        verbose_name="Дата рождения", blank=True, null=True
+    )
+    image = models.ImageField(
+        upload_to="avatars/", verbose_name="Аватарка", blank=True, null=True
+    )
+    slug = models.SlugField(
+        max_length=128, verbose_name="Слаг", unique=True, blank=True
+    )
 
     class Meta:
         verbose_name = "Аккаунт"

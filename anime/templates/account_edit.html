@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}
+    |{{ account.user.username }}
+{% endblock title %}
+{% block content %}
+    {% load static %}
+    <section class="product spad">
+        {% if user.is_authenticated %}
+            <div class="container">
+                <div class="row">
+                    <div class="profile_edit_text">
+                        {% if not user.username == account.user.username %}
+                            Редактирование чужих профилей запрещено
+                        {% else %}
+                            <form method="post"
+                                  action="{% url "account_edit" user.account.slug %}"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <ul>
+                                    <li>
+                                        Изображение:
+                                        <div>
+                                            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
+                                        </div>
+                                    </li>
+                                    <li>Имя пользователя: {{ user.username }}</li>
+                                    <li>
+                                        Почта: {{ user.email }}
+                                        <div class="input__item">
+                                            <input type="text" name="email" id="email" placeholder="Введите Вашу Почту">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        Фамилия: {{ user.last_name }}
+                                        <div class="input__item">
+                                            <input type="text"
+                                                   name="last_name"
+                                                   id="last_name"
+                                                   placeholder="Введите Вашу Фамилию">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        Имя: {{ user.first_name }}
+                                        <div class="input__item">
+                                            <input type="text"
+                                                   name="first_name"
+                                                   id="first_name"
+                                                   placeholder="Введите Ваше Имя">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        Дата рождения: {{ account.date_of_birth }}
+                                        <div class="input__item">
+                                            <input type="date"
+                                                   name="date_of_birth"
+                                                   id="date_of_birth"
+                                                   placeholder="Дата рождения">
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="profile_links">
+                                    <button class="site-btn">Сохранить</button>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+{% endblock content %}
