@@ -45,24 +45,29 @@
                             <div class="anime__details__rating">
                                 <form class="anime__details__rating-area" method="post">
                                     {% csrf_token %}
-                                    {% for i in "*****" %}
-                                        {% if forloop.revcounter in user_rating %}
-                                            <input type="radio"
-                                                   class="checked"
-                                                   id="star-{{ forloop.revcounter }}"
-                                                   name="rating"
-                                                   value="{{ forloop.revcounter }}"
-                                                   onclick="submit()">
-                                            <label class="checked" for="star-{{ forloop.revcounter }}"></label>
-                                        {% else %}
-                                            <input type="radio"
-                                                   id="star-{{ forloop.revcounter }}"
-                                                   name="rating"
-                                                   value="{{ forloop.revcounter }}"
-                                                   onclick="submit()">
-                                            <label for="star-{{ forloop.revcounter }}"></label>
-                                        {% endif %}
-                                    {% endfor %}
+                                    {% if user.is_authenticated %}
+                                        {% for i in "*****" %}
+                                            {% if forloop.revcounter in user_rating %}
+                                                <input type="radio"
+                                                       class="checked"
+                                                       id="star-{{ forloop.revcounter }}"
+                                                       name="rating"
+                                                       value="{{ forloop.revcounter }}"
+                                                       onclick="submit()">
+                                                <label class="checked" for="star-{{ forloop.revcounter }}"></label>
+                                            {% else %}
+                                                <input type="radio"
+                                                       id="star-{{ forloop.revcounter }}"
+                                                       name="rating"
+                                                       value="{{ forloop.revcounter }}"
+                                                       onclick="submit()">
+                                                <label for="star-{{ forloop.revcounter }}"></label>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div>Для оценки вы должны быть</div>
+                                        <a href="login">авторизированы</a>
+                                    {% endif %}
                                 </form>
                                 <div>Средний рейтинг: {{ anime_rating }}</div>
                                 <span>
@@ -106,7 +111,7 @@
                                             </li>
                                             <li>
                                                 <span>Жанры:</span>
-                                                {% for genre in anime.genres.all %}{{ genre.name }} {% endfor %}
+                                                {% for genre in anime.genres.all %}{{ genre.name }}{% endfor %}
                                             </li>
                                         </ul>
                                     </div>
@@ -163,7 +168,12 @@
                             {% for review in anime.get_review %}
                                 <div class="anime__review__item">
                                     <div class="anime__review__item__pic">
-                                        <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                        {% if review.user.account.image %}
+                                            <img src="{{ MEDIA_URL }} {{ review.user.account.image.url }}"
+                                                 alt="{% static 'img/anime/review-1.jpg' %}">
+                                        {% else %}
+                                            <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                        {% endif %}
                                     </div>
                                     <div class="anime__review__item__text">
                                         <h6>
@@ -188,7 +198,12 @@
                                 {% for review_answer in review.animereview_set.all %}
                                     <div class="anime__review__answer__item">
                                         <div class="anime__review__item__pic">
-                                            <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                            {% if review_answer.user.account.image %}
+                                                <img src="{{ MEDIA_URL }} {{ review_answer.user.account.image.url }}"
+                                                     alt="{% static 'img/anime/review-1.jpg' %}">
+                                            {% else %}
+                                                <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                            {% endif %}
                                         </div>
                                         <div class="anime__review__item__text">
                                             <h6>

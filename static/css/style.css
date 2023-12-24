@@ -437,6 +437,11 @@ ol {
 	margin-right: 0;
 }
 
+.header__right img {
+	max-width: 60px;
+	max-height: 60px;
+}
+
 .slicknav_menu {
 	display: none;
 }
@@ -1101,6 +1106,7 @@ input:checked + .slider:before {
 	position: absolute;
 	right: 0;
 	top: 0;
+	color: #ffffff;
 }
 
 .anime__details__rating div{
@@ -1720,11 +1726,58 @@ input:checked + .slider:before {
 }
 
 /*---------------------
-  Login
+  profile
 -----------------------*/
 
+.profile_text {
+	color: #ffffff;
+	display: inline-flex;
+}
+
+.profile_edit_text {
+	color: #ffffff;
+}
+
+.profile_edit_text ul li{
+	color: #ffffff;
+}
+
+
+.icon {
+	width: 100px;
+	margin-right: 30px;
+}
+
+.profile_text_not_image {
+	color:#ffffff;
+}
+
+.profile_change_icon {
+	color:#ffffff;
+}
+
+.profile_button button{
+	font-size: 12px;
+	color: #ffffff;
+	background: #e53637;
+	font-weight: 700;
+	border: none;
+	border-radius: 2px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 12px 30px;
+}
+
+.profile_links a {
+	color: #ffffff;
+}
+
+/*---------------------
+  Login
+-----------------------*/
 .login {
-	padding-top: 130px;
+	padding-top: 0px;
 	padding-bottom: 120px;
 }
 
@@ -1893,18 +1946,27 @@ input:checked + .slider:before {
 	top: 14px;
 }
 
+
+.logout h3 {
+	color: #ffffff;
+	font-weight: 700;
+	font-family: "Oswald", sans-serif;
+	margin-bottom: 30px;
+}
+
+.logout .primary-btn {
+	background: #e53637;
+	padding: 12px 42px;
+}
+
 /*---------------------
   Sign Up
 -----------------------*/
 
 .signup {
-	padding-top: 130px;
 	padding-bottom: 150px;
 }
 
-.signup .login__form:after {
-	height: 450px;
-}
 
 .signup .login__form h5 {
 	font-size: 15px;

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}
+    |{{ account.user.username }}
+{% endblock title %}
+{% block content %}
+    {% load static %}
+    <section class="product spad">
+        {% if user.is_authenticated %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        {% if not account.image %}
+                            {% if user.username == account.user.username %}
+                                <div class="profile_text_not_image">У вас нет изображения! Вместо него поставлено изображение по умолчанию.</div>
+                            {% endif %}
+                            <img class="icon" src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                        {% else %}
+                            <img class="icon" src="{{ MEDIA_URL }} {{ account.image.url }}" alt="">
+                        {% endif %}
+                        <div class="profile_text">
+                            <ul>
+                                <li>Имя пользователя: {{ account.user.username }}</li>
+                                <li>Фамилия: {{ account.user.last_name }}</li>
+                                <li>Имя: {{ account.user.first_name }}</li>
+                                <li>Дата рождения: {{ account.date_of_birth }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% if user.username == account.user.username %}
+                    <div class="profile_links">
+                        <a href="{% url "account_edit" user.account.slug %}">Редактировать профиль</a>
+                        <br>
+                        <a href="{% url "logout" %}">Выйти из аккаунта</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </section>
+{% endblock content %}

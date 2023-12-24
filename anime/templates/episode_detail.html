@@ -56,7 +56,6 @@
                         <div class="section-title">
                             <h5>Смотреть серии</h5>
                         </div>
-                        <!-- У серии что включена должна быть подсветка, либо сделать как на jutsu чтобы слева была серия назад, если есть и справа вперед, если есть -->
                         {% for episode in episodes %}
                             {% if episode.title == object.title %}
                                 <a class="anime_details__current_episode"
@@ -78,7 +77,12 @@
                             {% for review in object.get_review %}
                                 <div class="anime__review__item">
                                     <div class="anime__review__item__pic">
-                                        <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                        {% if review.user.account.image %}
+                                            <img src="{{ MEDIA_URL }} {{ review.user.account.image.url }}"
+                                                 alt="{% static 'img/anime/review-1.jpg' %}">
+                                        {% else %}
+                                            <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                        {% endif %}
                                     </div>
                                     <div class="anime__review__item__text">
                                         <h6>
@@ -103,7 +107,12 @@
                                 {% for review_answer in review.episodereview_set.all %}
                                     <div class="anime__review__answer__item">
                                         <div class="anime__review__item__pic">
-                                            <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                            {% if review_answer.user.account.image %}
+                                                <img src="{{ MEDIA_URL }} {{ review_answer.user.account.image.url }}"
+                                                     alt="{% static 'img/anime/review-1.jpg' %}">
+                                            {% else %}
+                                                <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                                            {% endif %}
                                         </div>
                                         <div class="anime__review__item__text">
                                             <h6>

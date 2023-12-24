@@ -5,6 +5,34 @@ from django.contrib.auth.models import User
 from anime.choices import STATUS_CHOICES, TYPE_CHOICES, QUALITY_CHOICES
 
 
+class Account(models.Model):
+    """Model of account"""
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="account",
+        verbose_name="Пользователь",
+        unique=True,
+    )
+    date_of_birth = models.DateField(
+        verbose_name="Дата рождения", blank=True, null=True
+    )
+    image = models.ImageField(
+        upload_to="avatars/", verbose_name="Аватарка", blank=True, null=True
+    )
+    slug = models.SlugField(
+        max_length=128, verbose_name="Слаг", unique=True, blank=True
+    )
+
+    class Meta:
+        verbose_name = "Аккаунт"
+        verbose_name_plural = "Аккаунты"
+
+    def __str__(self) -> str:
+        return f"{self.user}"
+
+
 class Studio(models.Model):
     """Model for studio"""
 

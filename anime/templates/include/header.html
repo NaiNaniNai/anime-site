@@ -42,7 +42,19 @@
             <div class="col-lg-2">
                 <div class="header__right">
                     <a href="#" class="search-switch"><span class="icon_search"></span></a>
-                    <a href="login.html"><span class="icon_profile"></span></a>
+                    {% if user.is_authenticated %}
+                        {% if user.account.image %}
+                            <a href="{% url 'account_detail' user.account.slug %}">
+                                <img src="{{ MEDIA_URL }}{{ user.account.image.url }}" alt="">
+                            </a>
+                        {% else %}
+                            <a href="{% url 'account_detail' user.account.slug %}">
+                                <img src="{% static 'img/anime/review-1.jpg' %}" alt="">
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}"><span class="icon_profile"></span></a>
+                    {% endif %}
                 </div>
             </div>
         </div>

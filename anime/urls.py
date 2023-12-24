@@ -14,6 +14,16 @@ urlpatterns = [
         name="category_detail",
     ),
     path("about/", views.About.as_view(), name="about"),
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("singup/", views.SingupView.as_view(), name="singup"),
+    path("logout/", views.logout_view, name="logout"),
+    path("reset_password/", views.ResetPasswordView.as_view(), name="reset_password"),
+    path("users/<slug:slug>/", views.AccountDetail.as_view(), name="account_detail"),
+    path(
+        "users/<slug:user_slug>/edit",
+        views.EditAccountView.as_view(),
+        name="account_edit",
+    ),
     path("<slug:slug>/", views.AnimeDetailViews.as_view(), name="anime_detail"),
     path("<slug:anime_slug>/watch/", views.EpisodeList.as_view(), name="episode_list"),
     path(
