@@ -28,10 +28,48 @@
                     </div>
                 </div>
                 {% if user.username == account.user.username %}
-                    <div class="profile_links">
-                        <a href="{% url "account_edit" user.account.slug %}">Редактировать профиль</a>
-                        <br>
-                        <a href="{% url "logout" %}">Выйти из аккаунта</a>
+                    <div class="col-lg-9">
+                        <div class="studio__details__anime">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <div class="section-title">
+                                        <h4>Отслеживаемые аниме</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                {% for follow in follows %}
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="product__item">
+                                            <div class="product__item__pic set-bg"
+                                                 data-setbg="{{ MEDIA_ROOT }}{{ follow.anime.poster_for_main_page.url }}">
+                                                <div class="ep">{{ follow.anime.released_episodes }} / {{ follow.anime.planned_episodes }}</div>
+                                                <div class="comment">
+                                                    <i class="fa fa-comments"></i> {{ follow.anime.animereview_set.count }}
+                                                </div>
+                                                <div class="view">
+                                                    <i class="fa fa-eye"></i> {{ follow.anime.views }}
+                                                </div>
+                                            </div>
+                                            <div class="product__item__text">
+                                                <ul>
+                                                    <li>{{ follow.anime.category }}</li>
+                                                    {% for genre in follow.anime.genres.all %}<li>{{ genre.name }}</li>{% endfor %}
+                                                </ul>
+                                                <h5>
+                                                    <a href="{% url 'anime_detail' follow.anime.slug %}">{{ follow.anime.title }}</a>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="profile_links">
+                                <a href="{% url "account_edit" user.account.slug %}">Редактировать профиль</a>
+                                <br>
+                                <a href="{% url "logout" %}">Выйти из аккаунта</a>
+                            </div>
+                        </div>
                     </div>
                 {% endif %}
             </div>

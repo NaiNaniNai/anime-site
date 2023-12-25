@@ -31,4 +31,5 @@ urlpatterns = [
         views.EpisodeDetail.as_view(),
         name="episode_detail",
     ),
+    path("<slug:anime_slug>/add_following", views.get_following_anime, name="follow"),
 ]

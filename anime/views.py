@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView, FormView
 from project_root.settings import BASE_DIR
 
 
-from .models import Anime, Studio, Category, Vote, Episode, Account
+from .models import Anime, Studio, Category, Vote, Episode, Account, FollowingAnime
 from .forms import AnimeReviewForm, EpisodeReviewForm, SingupForm
 
 
@@ -247,9 +247,14 @@ class AccountDetail(View):
 
     def get(self, request, slug):
         account = Account.objects.filter(slug=slug).first()
+        user = User.objects.filter(username=account.user.username).first()
+        follows = user.following_anime.all()
+
         context = {
             "account": account,
+            "follows": follows,
         }
+
         return render(request, "profile.html", context)
 
 
@@ -262,7 +267,6 @@ class LoginView(View):
     def post(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        print(username)
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -362,10 +366,24 @@ class ResetPasswordView(View):
         email = request.POST.get("email")
         new_password = request.POST.get("new_password")
         user = User.objects.filter(username=username).first()
-        print(new_password)
         if user.email == email:
             if new_password:
                 user.set_password(new_password)
                 user.save()
 
         return redirect(reverse("login"))
+
+
+def get_following_anime(request, anime_slug):
+    """Add following anime on user"""
+
+    if request.method == "GET":
+        anime = Anime.objects.filter(slug=anime_slug).first()
+        user = request.user
+        if FollowingAnime.objects.filter(user_id=user.id, anime_id=anime.id):
+            FollowingAnime.objects.filter(user=user, anime_id=anime.id).delete()
+        else:
+            FollowingAnime.objects.filter(user=user).create(
+                user_id=user.id, anime_id=anime.id
+            )
+        return redirect(reverse("anime_detail", kwargs={"slug": anime_slug}))
