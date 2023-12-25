@@ -1,3 +1,4 @@
+import openpyxl
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -387,3 +388,37 @@ def get_following_anime(request, anime_slug):
                 user_id=user.id, anime_id=anime.id
             )
         return redirect(reverse("anime_detail", kwargs={"slug": anime_slug}))
+
+
+class ExportToExcelView(View):
+    """Export to excel"""
+
+    def get(self, requset):
+        return render(requset, "export_to_excel.html")
+
+    def post(self, request):
+        query = Anime.objects.filter(is_draft=False).order_by("id")
+        title = request.POST.get("title")
+        type = request.POST.get("type")
+
+        if title:
+            query = query.filter(title__icontains=title)
+
+        if type:
+            query = query.filter(type=type)
+
+        fields = [field.name for field in Anime._meta.fields]
+
+        workbook = openpyxl.Workbook()
+        worksheet = workbook.active
+        worksheet.append(fields)
+        animes = query.values_list(*fields)
+
+        for anime in animes:
+            worksheet.append(anime)
+
+        response = HttpResponse(content_type="application/ms-excel")
+        response["Content-Disposition"] = "attachment; filename=result.xlsx"
+        workbook.save(response)
+
+        return response

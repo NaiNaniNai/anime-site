@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}
+    |Export to Excel
+{% endblock title %}
+{% block content %}
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="export">
+                        <form method="post" action="{% url 'export' %}">
+                            {% csrf_token %}
+                            <div class="export_input__item">
+                                <input type="text" name="title" id="title" placeholder="Название аниме">
+                            </div>
+                            <div class="export_input__item">
+                                <input type="text" name="type" id="type" placeholder="Тип аниме">
+                            </div>
+                            <button type="submit" class="site-btn">Export</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

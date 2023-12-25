@@ -2005,6 +2005,15 @@ input:checked + .slider:before {
 }
 
 /*---------------------
+  Export
+-----------------------*/
+
+.export_input__item {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+/*---------------------
   Footer
 -----------------------*/
 
