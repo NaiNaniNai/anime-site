@@ -66,7 +66,7 @@
                                         {% endfor %}
                                     {% else %}
                                         <div>Для оценки вы должны быть</div>
-                                        <a href="login">авторизированы</a>
+                                        <a href="{% url "login" %}">авторизированы</a>
                                     {% endif %}
                                 </form>
                                 <div>Средний рейтинг: {{ anime_rating }}</div>
@@ -144,13 +144,24 @@
                             <div class="anime__details__shots">
                                 <span>Кадры к аниме</span>
                                 <div>
-                                    {% for image in anime.animeshots_set.all %}
-                                        <img src="{{ image.image.url }}" class="anime__details__shots__img" alt="">
-                                    {% endfor %}
+                                    {% if anime.animeshots_set.all %}
+                                        {% for image in anime.animeshots_set.all %}
+                                            <img src="{{ image.image.url }}" class="anime__details__shots__img" alt="">
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>Кадров пока нет</p>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="anime__details__btn">
-                                <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Follow</a>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'follow' anime_slug=anime.slug %}" class="follow-btn"><i class="fa fa-heart-o"></i>Отслеживать</a>
+                                {% else %}
+                                    <div>
+                                        Для отслеживания вы должны быть
+                                        <a href="{% url 'login' %}">авторизированы</a>
+                                    </div>
+                                {% endif %}
                                 <a href="{% url 'episode_list' anime_slug=anime.slug %}"
                                    class="watch-btn"><span>Смотреть</span> <i class="fa fa-angle-right"></i></a>
                             </div>
@@ -192,8 +203,10 @@
                                             <p>{{ review.text }}</p>
                                         {% endif %}
                                     </div>
-                                    <a href="#formReview"
-                                       onclick="addReview('{{ review.user.username }}', {{ review.id }})">Ответить</a>
+                                    {% if user.is_authenticated %}
+                                        <a href="#formReview"
+                                           onclick="addReview('{{ review.user.username }}', {{ review.id }})">Ответить</a>
+                                    {% endif %}
                                 </div>
                                 {% for review_answer in review.animereview_set.all %}
                                     <div class="anime__review__answer__item">
@@ -235,22 +248,30 @@
                             <div class="section-title">
                                 <h5>Оставьте ваш комментарий</h5>
                             </div>
-                            <form action="{% url "anime_detail" slug=anime.slug %}"
-                                  method="post"
-                                  id="formReview">
-                                {% csrf_token %}
-                                <input hidden name="parent" id="contactparent" value="">
-                                <textarea placeholder="Ваш комментарий" name="text" id="text"></textarea>
-                                <span>Наличие спойлеров</span>
-                                <label class="spoiler_switch">
-                                    <input name="have_spoiler" type="checkbox">
-                                    <span class="slider round"></span>
-                                </label>
-                                <br>
-                                <button type="submit">
-                                    <i class="fa fa-location-arrow"></i> Отправить
-                                </button>
-                            </form>
+                            {% if user.is_authenticated %}
+                                <form action="{% url "anime_detail" slug=anime.slug %}"
+                                      method="post"
+                                      id="formReview">
+                                    {% csrf_token %}
+                                    <input hidden name="parent" id="contactparent" value="">
+                                    <textarea placeholder="Ваш комментарий" name="text" id="text"></textarea>
+                                    <span>Наличие спойлеров</span>
+                                    <label class="spoiler_switch">
+                                        <input name="have_spoiler" type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <br>
+                                    <button type="submit">
+                                        <i class="fa fa-location-arrow"></i> Отправить
+                                    </button>
+                                </form>
+                            {% else %}
+                                <div class="anime__review__item__text">
+                                    <h6>
+                                        Для отправки комментариев Вы должны быть <a href="{% url "login" %}">авторизированы</a>
+                                    </h6>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

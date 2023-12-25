@@ -232,9 +232,17 @@ class FollowingAnime(models.Model):
     """Model for following anime"""
 
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Пользователь"
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+        related_name="following_anime",
     )
-    anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Аниме")
+    anime = models.ForeignKey(
+        Anime,
+        on_delete=models.CASCADE,
+        verbose_name="Аниме",
+        related_name="following_anime",
+    )
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(
         auto_now=True, verbose_name="Дата обновления", blank=True
