@@ -24,6 +24,7 @@ urlpatterns = [
         views.EditAccountView.as_view(),
         name="account_edit",
     ),
+    path("export/", views.ExportToExcelView.as_view(), name="export"),
     path("<slug:slug>/", views.AnimeDetailViews.as_view(), name="anime_detail"),
     path("<slug:anime_slug>/watch/", views.EpisodeList.as_view(), name="episode_list"),
     path(
