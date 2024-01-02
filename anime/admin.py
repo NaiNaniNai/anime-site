@@ -288,10 +288,3 @@ class AccountAdmin(admin.ModelAdmin):
             },
         ),
     )
-
-    # def get_avatar(self, obj):
-    #     return mark_safe(f'<img src={obj.image.url} width="100" height="120"')
-
-    # readonly_fields = ("get_avatar",)
-    # prepopulated_fields = {"slug": ("user__id",)}
-    # get_avatar.short_description = "Аватарка"  # type: ignore
